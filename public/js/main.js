@@ -55,3 +55,18 @@
     
 
 })(jQuery);
+
+
+function myRoomReservation() {
+  this.checkSetup();
+
+  //signin objects
+  this.signInButton = document.getElementById('signInButton');
+
+
+  //signinEvent
+  this.signInButton.addEventListener('click', this.signIn.bind(this));
+
+  //initialize Firebase
+  this.initFirebase();
+};
