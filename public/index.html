@@ -135,9 +135,9 @@
   <!-- login body START -->
   <!-- add this class to body#one_page_app tag after SUCCESSFUL LOGIN: class="fix-header" -->
   <!-- add style="display: none" to #login_form_holder -->
-  <body class="fix-header" id="one_page_app">
+  <body id="one_page_app">
       <!-- login form -->
-    	<div class="limiter" id="login_form_holder" style="display: none">
+    	<div class="limiter" id="login_form_holder">
         <div class="container-login100">
           <div class="wrap-login100">
 
@@ -204,7 +204,7 @@
           <!-- ============================================================== -->
           <!-- Left Sidebar - style you can find in sidebar.scss  -->
           <!-- ============================================================== -->
-          <div class="navbar-default sidebar" role="navigation">
+          <div class="navbar-default sidebar" role="navigation" id="sidebarHead">
               <div class="sidebar-nav slimscrollsidebar">
                   <div class="sidebar-head">
                       <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3>
@@ -229,7 +229,7 @@
                           <a href="#" class="waves-effect"><i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i>Announcement</a>
                       </li>
                       <li>
-                          <a href="#" class="waves-effect"><i class="fa  fa-power-off fa-fw" aria-hidden="true"></i>Logout</a>
+                          <a href="#" class="waves-effect" id="logoutButton"><i class="fa  fa-power-off fa-fw" aria-hidden="true"></i>Logout</a>
                       </li>
 
                   </ul>
@@ -324,7 +324,7 @@
                 </div>
                  <!-- END ADMIN VIEW -->
               <!-- /.container-fluid -->
-              <footer class="footer text-center"> 2018* &copy; Hackathon * Noobita </footer>
+              <footer class="footer text-center" id="footer"> 2018* &copy; Hackathon * Noobita </footer>
           </div>
           <!-- ============================================================== -->
           <!-- End Page Content -->

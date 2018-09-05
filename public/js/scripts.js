@@ -4,16 +4,29 @@ var usersRef;
 var roomsRef;
 var reservationsRef;
 var reservedListRef;
+var userAdmin = false;
 
 function myRoomReservation() {
   this.checkSetup();
 
+  //pages
+  this.loginPage = document.getElementById('login_form_holder');
+  this.wrapperPage = document.getElementById('wrapper');
+  this.header = document.getElementById('one_page_app');
+  this.sidebarHeader = document.getElementById('sidebarHead'); 
+  this.footer = document.getElementById('footer');
+
   //signin object
   this.signInButton = document.getElementById('signInButton');
 
+  //logout object
+  this.logoutButton = document.getElementById('logoutButton');
 
   //signinEvent
   this.signInButton.addEventListener('click', this.signIn.bind(this));
+
+  //logoutEvent
+  this.logoutButton.addEventListener('click', this.signOut.bind(this));
 
   //initialize Firebase
   this.initFirebase();
@@ -51,7 +64,16 @@ myRoomReservation.prototype.signIn = function () {
 myRoomReservation.prototype.onAuthStateChanged = function(user) {
   if (user) {
     this.addUserInFirestore(user);
+    this.loginPage.setAttribute('hidden', true);
+    this.header.setAttribute('class', 'fix-header');
+    this.sidebarHeader.removeAttribute('hidden');
+    this.footer.removeAttribute('hidden');
+    this.listReservedRooms();
   } else {
+    this.loginPage.removeAttribute('hidden');
+    this.header.removeAttribute('class');
+    this.sidebarHeader.setAttribute('hidden', true);
+    this.footer.setAttribute('hidden', true);
     console.log("User is NOT logged in.");
   }
 }
@@ -63,6 +85,7 @@ myRoomReservation.prototype.addUserInFirestore = function(user) {
 	.then(function(doc) {
 		if (doc.exists) {
 			console.info("User already existing.");
+			userAdmin = doc.data().admin;
 		} else {
 			var addUser = usersRef.doc(user.uid).set({
 				admin: false,
@@ -81,6 +104,55 @@ myRoomReservation.prototype.addUserInFirestore = function(user) {
 		console.error("Failed to query user: ", err);
 	})
 
+}
+
+//checks setup of the Firebase connection
+myRoomReservation.prototype.checkSetup = function() {
+  if (!window.firebase || !(firebase.app instanceof Function) || !firebase.app().options) {
+    window.alert('You have not configured and imported the Firebase SDK. ' +
+        'Make sure you go through the codelab setup instructions and make ' +
+        'sure you are running the codelab using `firebase serve`');
+  } else {
+  	console.log("Successfully connected to Firebase!");
+  }
+};
+
+//reserved rooms list
+myRoomReservation.prototype.listReservedRooms = function() {
+	var dateToday = new Date();
+	console.log("admin: ", userAdmin);
+	console.log("dateToday: ", dateToday);
+	if(true) {
+		var listAllReserved = reservedListRef.where("reservedSchedule", ">=", dateToday).orderBy("reservedSchedule", "desc")
+		.onSnapshot(function(list) {
+	        if(list) {
+		        $('#list_reservation').empty();
+		        	var count = 0; 
+		            list.forEach(function(rooms) {
+		                var roomDetails = rooms.data();
+		                var roomRef = roomDetails.room;
+		                console.log("Room Ref: ", roomRef);
+		                count += 1;
+		                $('#list_reservation').append($('<tr>',{
+		                  html: "<td>" + count + "</td>" + 
+		                  "<td>" + roomRef.name + "</td>" +
+		                  "<td>" + roomDetails.status + "</td>" +
+		                  "<td>" + roomDetails.reservedSchedule.toDate() + "</td></tr>"
+		                }));
+		            })
+		        console.log("Rooms list query completed!");
+	        }
+	    });
+	} else {
+		//...different list
+	}
+}
+
+//signout
+myRoomReservation.prototype.signOut = function () {
+  this.auth.signOut();
+  console.info("User logged out.");
+  window.location.reload();
 }
 
 //checks setup of the Firebase connection
