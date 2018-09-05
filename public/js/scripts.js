@@ -11,10 +11,14 @@ function myRoomReservation() {
 
   //pages
   this.loginPage = document.getElementById('login_form_holder');
+  this.dash_nav = document.getElementById('dash_nav');
   this.wrapperPage = document.getElementById('wrapper');
   this.header = document.getElementById('one_page_app');
   this.sidebarHeader = document.getElementById('sidebarHead'); 
+  this.dash_nav = document.getElementById('dash_nav');
   this.footer = document.getElementById('footer');
+
+  // this.wrapperPage.setAttribute('style','display:none');
 
   //signin object
   this.signInButton = document.getElementById('signInButton');
@@ -67,13 +71,17 @@ myRoomReservation.prototype.onAuthStateChanged = function(user) {
     this.loginPage.setAttribute('hidden', true);
     this.header.setAttribute('class', 'fix-header');
     this.sidebarHeader.removeAttribute('hidden');
+    this.dash_nav.removeAttribute('hidden');
     this.footer.removeAttribute('hidden');
+    this.wrapperPage.removeAttribute('style');
     this.listReservedRooms();
   } else {
     this.loginPage.removeAttribute('hidden');
     this.header.removeAttribute('class');
     this.sidebarHeader.setAttribute('hidden', true);
+    this.dash_nav.setAttribute('hidden', true);
     this.footer.setAttribute('hidden', true);
+    this.wrapperPage.setAttribute('style','display:none');
     console.log("User is NOT logged in.");
   }
 }
