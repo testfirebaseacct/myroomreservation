@@ -3,7 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My Room Reservation</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+
+    <title>skedME</title>
         <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--===============================================================================================-->	
@@ -23,6 +26,29 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
   <!--===============================================================================================-->
 
+    <!-- Bootstrap Core CSS -->
+    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <!-- toast CSS -->
+    <link href="plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <!-- morris CSS -->
+    <link href="plugins/bower_components/morrisjs/morris.css" rel="stylesheet">
+    <!-- chartist CSS -->
+    <link href="plugins/bower_components/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    <!-- animation CSS -->
+    <link href="css/animate.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- color CSS -->
+    <link href="css/colors/default.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
     <style media="screen">
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
@@ -37,10 +63,81 @@
         body, #message { margin-top: 0; background: white; box-shadow: none; }
         body { border-top: 16px solid #ffa100; }
       }
+
+      /* for checkbox of Admin view users */
+      /* The container */
+      .container {
+          /* display: block; */
+          position: relative;
+          padding-left: 35px;
+          margin-bottom: 12px;
+          cursor: pointer;
+          font-size: 15px;
+          /* -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none; */
+          user-select: none;
+      }
+
+      /* Hide the browser's default checkbox */
+      .container input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+      }
+
+      /* Create a custom checkbox */
+      .checkmark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 25px;
+          width: 25px;
+          background-color: #eee;
+      }
+
+      /* On mouse-over, add a grey background color */
+      .container:hover input ~ .checkmark {
+          background-color: #ccc;
+      }
+
+      /* When the checkbox is checked, add a blue background */
+      .container input:checked ~ .checkmark {
+          background-color: #2196F3;
+      }
+
+      /* Create the checkmark/indicator (hidden when not checked) */
+      .checkmark:after {
+          content: "";
+          position: absolute;
+          display: none;
+      }
+
+      /* Show the checkmark when checked */
+      .container input:checked ~ .checkmark:after {
+          display: block;
+      }
+
+      /* Style the checkmark/indicator */
+      .container .checkmark:after {
+          left: 9px;
+          top: 5px;
+          width: 5px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 3px 3px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+      }
     </style>
   </head>
-  <body>
-    	<div class="limiter">
+  <!-- login body START -->
+  <!-- add this class to body#one_page_app tag after SUCCESSFUL LOGIN: class="fix-header" -->
+  <!-- add style="display: none" to #login_form_holder -->
+  <body class="fix-header" id="one_page_app">
+      <!-- login form -->
+    	<div class="limiter" id="login_form_holder" style="display: none">
         <div class="container-login100">
           <div class="wrap-login100">
 
@@ -55,12 +152,192 @@
               <div class="container-login100-form-btn">
                 <button type="button" id="signInButton" class="login100-form-btn">
                 Login
-                </button>
+                </button></div>
+
             </form>
 
+          </div>
         </div>
       </div>
-    </div>
+      <!-- login form -->
+      
+      <!-- dashboard  -->
+          <!-- ============================================================== -->
+          <!-- Preloader -->
+          <!-- ============================================================== -->
+      <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+      </div>
+      <!-- ============================================================== -->
+      <!-- Wrapper -->
+      <!-- ============================================================== -->
+      <div id="wrapper">
+          <!-- ============================================================== -->
+          <!-- Topbar header - style you can find in pages.scss -->
+          <!-- ============================================================== -->
+          <nav class="navbar navbar-default navbar-static-top m-b-0">
+              <div class="navbar-header">
+                  <div class="top-left-part">
+                      <!-- Logo -->
+                      <a class="logo" href="index.html">
+                        <img src="plugins/images/skedme.png" alt="home" class="light-logo" />
+                      </a>
+                  </div>
+                  <!-- /Logo -->
+                  <ul class="nav navbar-top-links navbar-right pull-right">
+                      <!-- <li>
+                          <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
+                              <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+                      </li> -->
+                      <li>
+                          <a class="profile-pic" href="#"> <img src="plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">Janelle</b></a>
+                      </li>
+                  </ul>
+              </div>
+              <!-- /.navbar-header -->
+              <!-- /.navbar-top-links -->
+              <!-- /.navbar-static-side -->
+          </nav>
+          <!-- End Top Navigation -->
+          <!-- ============================================================== -->
+          <!-- Left Sidebar - style you can find in sidebar.scss  -->
+          <!-- ============================================================== -->
+          <div class="navbar-default sidebar" role="navigation">
+              <div class="sidebar-nav slimscrollsidebar">
+                  <div class="sidebar-head">
+                      <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3>
+                  </div>
+                  <ul class="nav" id="side-menu">
+                      <li style="padding: 70px 0 0;" id="" >
+                          <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a>
+                      </li>
+                      <li id="">
+                          <a href="#" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Profile</a>
+                      </li>
+                      <li id="">
+                          <a href="#" class="waves-effect"><i class="fa fa-calendar-o fa-fw" aria-hidden="true"></i>My Reservation</a>
+                      </li>
+                      <li>
+                          <a href="#" class="waves-effect"><i class="fa  fa-building fa-fw" aria-hidden="true"></i>Rooms</a>
+                      </li>
+                      <li>
+                          <a href="#" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>Users</a>
+                      </li>
+                      <li>
+                          <a href="#" class="waves-effect"><i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i>Announcement</a>
+                      </li>
+                      <li>
+                          <a href="#" class="waves-effect"><i class="fa  fa-power-off fa-fw" aria-hidden="true"></i>Logout</a>
+                      </li>
+
+                  </ul>
+              </div>
+              
+          </div>
+          <!-- ============================================================== -->
+          <!-- End Left Sidebar -->
+          <!-- ============================================================== -->
+          <!-- ============================================================== -->
+          <!-- Page Content -->
+          <!-- ============================================================== -->
+          
+          <div id="page-wrapper">
+              <!-- START ADMIN VIEW -->
+
+              <!-- ADMIN VIEW DASHBOARD -->
+
+              <div class="container-fluid" id="admin_list_reservations"  >
+                <!-- ============================================================== -->
+                <!-- table -->
+                <!-- ============================================================== -->
+                <div class="row">
+                  <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="white-box">
+                      <h3 class="box-title">Room Reservations</h3>
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>NAME</th>
+                                  <th>STATUS</th>
+                                  <th>DATE/TIME</th>
+                                  <th>CANCEL</th>
+                              </tr>
+                          </thead>
+                          <tbody id="list_reservation">
+                              <tr>
+                                  <td>1</td>
+                                  <td class="txt-oflo">Elite admin</td>
+                                  <td>Upcoming/On-going/Done</td>
+                                  <td class="txt-oflo">April 18, 2017 1:00 - 3:00 PM</td>
+                                  <td><span class="text-success"><a href="#" class="waves-effect"><i class="fa fa-external-link fa-fw" aria-hidden="true"></i></a></span></td>
+                              </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- ADMIN VIEW FOR USERS -->
+              
+              <div class="container-fluid" id="admin_list_users" >
+                  <!-- ============================================================== -->
+                  <!-- table -->
+                  <!-- ============================================================== -->
+                  <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                      <div class="white-box">
+                        <h3 class="box-title">USERS</h3>
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30%">#</th>
+                                    <th style="width: 40%">NAME</th>
+                                    <th style="width: 40%">EMAIL</th>
+                                    <th style="width: 30%">ROLE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="list_users">
+                                <tr>
+                                    <td style="width: 10%">1</td>
+                                    <td style="width: 40%" >Janelle Lagatuz</td>
+                                    <td style="width: 40%" >jalagatuz@gmail.com</td>
+                                    <td style="width: 10% !important" > 
+                                      <label class="container">Admin
+                                        <input type="checkbox" checked="checked">
+                                        <span class="checkmark"></span>
+                                      </label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                 <!-- END ADMIN VIEW -->
+              <!-- /.container-fluid -->
+              <footer class="footer text-center"> 2018* &copy; Hackathon * Noobita </footer>
+          </div>
+          <!-- ============================================================== -->
+          <!-- End Page Content -->
+          <!-- ============================================================== -->
+      </div>
+        <!-- ============================================================== -->
+        <!-- End Wrapper -->
+        <!-- ============================================================== -->
+      <!-- dashboard -->
+
+
+
+
     <!--===============================================================================================-->	
       <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
     <!--===============================================================================================-->
@@ -91,6 +368,33 @@
     <!-- backend script -->
     <script src="js/scripts.js"></script>
     <!-- <script src="js/main.js"></script> -->
+
+    <!-- FOR DASHBOARD -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+    <!--slimscroll JavaScript -->
+    <script src="js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="js/waves.js"></script>
+    <!--Counter js -->
+    <script src="plugins/bower_components/waypoints/lib/jquery.waypoints.js"></script>
+    <script src="plugins/bower_components/counterup/jquery.counterup.min.js"></script>
+    <!-- chartist chart -->
+    <script src="plugins/bower_components/chartist-js/dist/chartist.min.js"></script>
+    <script src="plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+    <!-- Sparkline chart JavaScript -->
+    <script src="plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="js/custom.min.js"></script>
+    <script src="js/dashboard1.js"></script>
+    <script src="plugins/bower_components/toast-master/js/jquery.toast.js"></script>
+    <!-- FOR DASHBOARD -->
 
   </body>
 </html>
