@@ -1,9 +1,5 @@
 'use strict';
 
-function test() {
-	console.log("Test!")
-}
-
 function myRoomReservation() {
   this.checkSetup();
 
