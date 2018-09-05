@@ -1,15 +1,15 @@
  $(document).ready(function () {
      "use strict";
      // toat popup js
-     $.toast({
-         heading: 'Welcome to skedME',
-         text: 'Please support admin if Dashboard is not showing',
-         position: 'top-right',
-         loaderBg: '#fff',
-         icon: 'warning',
-         hideAfter: 3500,
-         stack: 6
-     })
+    //  $.toast({
+    //      heading: 'Welcome to skedME',
+    //      text: 'Please support admin if Dashboard is not showing',
+    //      position: 'top-right',
+    //      loaderBg: '#fff',
+    //      icon: 'warning',
+    //      hideAfter: 3500,
+    //      stack: 6
+    //  })
 
 
      //ct-visits
