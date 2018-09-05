@@ -130,15 +130,16 @@ myRoomReservation.prototype.listReservedRooms = function() {
 		        	var count = 0; 
 		            list.forEach(function(rooms) {
 		                var roomDetails = rooms.data();
-		                var roomRef = roomDetails.room;
-		                console.log("Room Ref: ", roomRef);
-		                count += 1;
-		                $('#list_reservation').append($('<tr>',{
-		                  html: "<td>" + count + "</td>" + 
-		                  "<td>" + roomRef.name + "</td>" +
-		                  "<td>" + roomDetails.status + "</td>" +
-		                  "<td>" + roomDetails.reservedSchedule.toDate() + "</td></tr>"
-		                }));
+		                var roomRef = firebase.firestore().doc(rooms.get("room").path).get().then(function(rm) {
+		                	count += 1;
+			                $('#list_reservation').append($('<tr>',{
+			                  html: "<td>" + count + "</td>" + 
+			                  "<td>" + rm.data().name + "</td>" +
+			                  "<td>" + roomDetails.status + "</td>" +
+			                  "<td>" + roomDetails.reservedSchedule.toDate() + "</td>" +
+			                  "<td><span class='text-success'><a href='#'' class='waves-effect' id='cancel_reserve' onclick='cancelReservation(" + rooms.id + ")'><i class='fa fa-external-link fa-fw' aria-hidden='true'></i></a></span></td></tr>"
+			                }));  
+		                });
 		            })
 		        console.log("Rooms list query completed!");
 	        }
