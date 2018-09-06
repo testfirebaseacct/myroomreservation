@@ -35,6 +35,10 @@ function myRoomReservation() {
   //entities from pages
   this.addRoomButton = document.getElementById('add_new_room');
   this.headActionsTable = document.getElementById('actions_head_room');
+  this.addReservationPage = document.getElementById('add_new_booking');
+  this.editReservationPage = document.getElementById('edit_booking');
+  this.addRoomPage = document.getElementById('add_new_room');
+  this.editRoomPage = document.getElementById('edit_new_room');
 
   //userheader
   this.profilePicHead = document.getElementById('profilePic');
@@ -74,12 +78,20 @@ myRoomReservation.prototype.dashboardShowPages = function () {
   profilePage.setAttribute('hidden', true);
   reservationsPage.setAttribute('hidden', true);
   roomsPage.setAttribute('hidden', true);
+  addReservationPage.setAttribute('hidden', true);
+  editReservationPage.setAttribute('hidden', true);
+  addRoomPage.setAttribute('hidden', true);
+  editRoomPage.setAttribute('hidden', true);
  } else {
   dashboardPage.removeAttribute('hidden');
   usersPage.setAttribute('hidden', true);
   profilePage.setAttribute('hidden', true);
   reservationsPage.setAttribute('hidden', true);
   roomsPage.setAttribute('hidden', true);
+  addReservationPage.setAttribute('hidden', true);
+  editReservationPage.setAttribute('hidden', true);
+  addRoomPage.setAttribute('hidden', true);
+  editRoomPage.setAttribute('hidden', true);
  }
 
 }
@@ -93,12 +105,20 @@ myRoomReservation.prototype.userShowPages = function () {
   profilePage.setAttribute('hidden', true);
   reservationsPage.setAttribute('hidden', true);
   roomsPage.setAttribute('hidden', true);
+  addReservationPage.setAttribute('hidden', true);
+  editReservationPage.setAttribute('hidden', true);
+  addRoomPage.setAttribute('hidden', true);
+  editRoomPage.setAttribute('hidden', true);
  } else {
   dashboardPage.setAttribute('hidden', true);
   usersPage.setAttribute('hidden', true);
   profilePage.setAttribute('hidden', true);
   reservationsPage.setAttribute('hidden', true);
   roomsPage.setAttribute('hidden', true);
+  addReservationPage.setAttribute('hidden', true);
+  editReservationPage.setAttribute('hidden', true);
+  addRoomPage.setAttribute('hidden', true);
+  editRoomPage.setAttribute('hidden', true);
  }
 
 }
@@ -113,6 +133,10 @@ myRoomReservation.prototype.roomShowPages = function () {
   roomsPage.removeAttribute('hidden');
   addRoomButton.setAttribute('hidden', true);
   headActionsTable.removeAttribute('hidden');
+  addReservationPage.setAttribute('hidden', true);
+  editReservationPage.setAttribute('hidden', true);
+  addRoomPage.setAttribute('hidden', true);
+  editRoomPage.setAttribute('hidden', true);
  } else {
   dashboardPage.setAttribute('hidden', true);
   usersPage.setAttribute('hidden', true);
@@ -121,6 +145,10 @@ myRoomReservation.prototype.roomShowPages = function () {
   roomsPage.removeAttribute('hidden');
   addRoomButton.removeAttribute('hidden');
   headActionsTable.setAttribute('hidden', true);
+  addReservationPage.setAttribute('hidden', true);
+  editReservationPage.setAttribute('hidden', true);
+  addRoomPage.setAttribute('hidden', true);
+  editRoomPage.setAttribute('hidden', true);
  }
 
 }
@@ -133,12 +161,20 @@ myRoomReservation.prototype.profileShowPages = function () {
   profilePage.removeAttribute('hidden');
   reservationsPage.setAttribute('hidden', true);
   roomsPage.setAttribute('hidden', true);
+  addReservationPage.setAttribute('hidden', true);
+  editReservationPage.setAttribute('hidden', true);
+  addRoomPage.setAttribute('hidden', true);
+  editRoomPage.setAttribute('hidden', true);
  } else {
   dashboardPage.setAttribute('hidden', true);
   usersPage.setAttribute('hidden', true);
   profilePage.removeAttribute('hidden');
   reservationsPage.setAttribute('hidden', true);
   roomsPage.setAttribute('hidden', true);
+  addReservationPage.setAttribute('hidden', true);
+  editReservationPage.setAttribute('hidden', true);
+  addRoomPage.setAttribute('hidden', true);
+  editRoomPage.setAttribute('hidden', true);
  }
 
 }
@@ -151,12 +187,20 @@ myRoomReservation.prototype.reservationShowPages = function () {
   profilePage.setAttribute('hidden', true);
   reservationsPage.removeAttribute('hidden');
   roomsPage.setAttribute('hidden', true);
+  addReservationPage.setAttribute('hidden', true);
+  editReservationPage.setAttribute('hidden', true);
+  addRoomPage.setAttribute('hidden', true);
+  editRoomPage.setAttribute('hidden', true);
  } else {
   dashboardPage.setAttribute('hidden', true);
   usersPage.setAttribute('hidden', true);
   profilePage.setAttribute('hidden', true);
   reservationsPage.removeAttribute('hidden');
   roomsPage.setAttribute('hidden', true);
+  addReservationPage.setAttribute('hidden', true);
+  editReservationPage.setAttribute('hidden', true);
+  addRoomPage.setAttribute('hidden', true);
+  editRoomPage.setAttribute('hidden', true);
  }
 
 }
@@ -169,12 +213,20 @@ myRoomReservation.prototype.announcementShowPages = function () {
   profilePage.setAttribute('hidden', true);
   reservationsPage.setAttribute('hidden', true);
   roomsPage.setAttribute('hidden', true);
+  addReservationPage.setAttribute('hidden', true);
+  editReservationPage.setAttribute('hidden', true);
+  addRoomPage.setAttribute('hidden', true);
+  editRoomPage.setAttribute('hidden', true);
  } else {
   dashboardPage.setAttribute('hidden', true);
   usersPage.setAttribute('hidden', true);
   profilePage.setAttribute('hidden', true);
   reservationsPage.setAttribute('hidden', true);
   roomsPage.setAttribute('hidden', true);
+  addReservationPage.setAttribute('hidden', true);
+  editReservationPage.setAttribute('hidden', true);
+  addRoomPage.setAttribute('hidden', true);
+  editRoomPage.setAttribute('hidden', true);
  }
 
 }
@@ -225,6 +277,10 @@ myRoomReservation.prototype.onAuthStateChanged = function(user) {
     this.profilePage.setAttribute('hidden', true);
     this.reservationsPage.setAttribute('hidden', true);
     this.roomsPage.setAttribute('hidden', true);
+    this.addReservationPage.setAttribute('hidden', true);
+    this.editReservationPage.setAttribute('hidden', true);
+    this.addRoomPage.setAttribute('hidden', true);
+    this.editRoomPage.setAttribute('hidden', true);
     
   } else {
     this.loginPage.removeAttribute('hidden');
