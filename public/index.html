@@ -130,6 +130,22 @@
           -ms-transform: rotate(45deg);
           transform: rotate(45deg);
       }
+      /* added by Ja for Accordion */
+        .panel-group .panel .panel-heading .accordion-toggle.collapsed:before, .panel-group .panel .panel-heading a[data-toggle=collapse].collapsed:before {
+        content: "\e114" !important; 
+      }
+
+      .panel-group .panel .panel-heading a[data-toggle=collapse]:before {
+        content:"\e113" !important;
+        display: block;
+        float: right;
+        font-family: themify;
+        font-size: 14px;
+        text-align: right;
+        width: 25px;
+
+      }
+
     </style>
   </head>
   <!-- login body START -->
@@ -377,14 +393,71 @@
                           <div class="table-responsive">
                             <table class="table">
                               <thead>
-                                  <tr>
-                                      <th>TITLE</th>
-                                  </tr>
+                                <tr>
+                                    <th>ROOM NAME</th>
+                                </tr>
                               </thead>
                               <tbody id="list_my_reservation">
-                                  <tr>
-                                      <td class="txt-oflo">Elite admin</td>
-                                  </tr>
+                                <tr>
+                                  <td class="txt-oflo">
+                                      <div class="panel-group" id="accordion">
+                                        <div class="panel panel-default" >
+                                          <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><strong>SANGANDAAN</strong></a>
+                                            </h4>
+                                          </div>
+                                          <div id="collapse1" class="panel-collapse collapse in">
+                                            <div class="panel-body">
+                                              <table class="table">
+                                                <thead>
+                                                  <tr>
+                                                    <th>FLOOR</th>
+                                                    <th>SCHEDULE</th>
+                                                    <th>ATTENDEES</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                      <td class="txt-oflo col-md-3">9F</td>
+                                                      <td class="txt-oflo col-md-3">September 7, 2018 13:00</td>
+                                                      <td class="txt-oflo col-md-6">aya@gmail.com, jalagatuz@gmail.com, seth@gmail.com </td>
+                                                    </tr>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                          <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><strong>BACLARAN</strong></a>
+                                            </h4>
+                                          </div>
+                                          <div id="collapse2" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                              <table class="table">
+                                                  <thead>
+                                                    <tr>
+                                                      <th>FLOOR</th>
+                                                      <th>SCHEDULE</th>
+                                                      <th>ATTENDEES</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      <tr>
+                                                        <td class="txt-oflo col-md-3">9F</td>
+                                                        <td class="txt-oflo col-md-3">September 8, 2018 17:30</td>
+                                                        <td class="txt-oflo col-md-6">jalagatuz@gmail.com, testfirebaseacct@gmail.com</td>
+                                                      </tr>
+                                                  </tbody>
+                                                </table>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div> 
+                                  </td>
+                                </tr>
                               </tbody>
                             </table>
                             <div>
@@ -515,7 +588,7 @@
                           <input type="date"  class="form-control form-control-line" id="edit_new_date" onclick="dateLimit()" >
                           <script>
                             function dateLimit() {
-                                //Display Only Date till today // 
+                                //Display Only Date till today // admin_list_of_rooms
                                 var dtToday = new Date();
                                 var month = dtToday.getMonth() + 1;     // getMonth() is zero-based
                                 var day = dtToday.getDate();
@@ -584,7 +657,7 @@
                 <!-- END EDIT BOOKING -->
 
                 <!-- ROOMS NAVIGATION VIEW -->
-                <div class="container-fluid" id="_admin_list_of_rooms"  >
+                <div class="container-fluid" id="admin_list_of_rooms"  >
                     <!-- ============================================================== -->
                     <!-- table -->
                     <!-- ============================================================== -->
