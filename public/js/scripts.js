@@ -5,7 +5,7 @@ var roomsRef;
 var reservationsRef;
 var reservedListRef;
 var announcementsRef;
-var userAdmin = false;
+var userAdmin;
 
 function myRoomReservation() {
   this.checkSetup();
@@ -34,7 +34,7 @@ function myRoomReservation() {
   this.announcementsLink = document.getElementById('announcementsLink');
 
   //entities from pages
-  this.addRoomButton = document.getElementById('add_new_room');
+  this.addRoomButton = document.getElementById('addRoomButton');
   this.headActionsTable = document.getElementById('actions_head_room');
   this.addReservationPage = document.getElementById('add_new_booking');
   this.editReservationPage = document.getElementById('edit_booking');
@@ -52,12 +52,12 @@ function myRoomReservation() {
   this.logoutLink = document.getElementById('logoutLink');
 
   //navsEvents
-  this.dashboardLink.addEventListener('click', this.dashboardShowPages.bind(this));
-  this.reservationsLink.addEventListener('click', this.reservationShowPages.bind(this));
-  this.profileLink.addEventListener('click', this.profileShowPages.bind(this));
-  this.roomsLink.addEventListener('click', this.roomShowPages.bind(this));
-  this.usersLink.addEventListener('click', this.userShowPages.bind(this));
-  this.announcementsLink.addEventListener('click', this.announcementShowPages.bind(this));
+  this.dashboardLink.addEventListener('click', dashboardShowPages.bind(this));
+  this.reservationsLink.addEventListener('click', reservationShowPages.bind(this));
+  this.profileLink.addEventListener('click', profileShowPages.bind(this));
+  this.roomsLink.addEventListener('click', roomShowPages.bind(this));
+  this.usersLink.addEventListener('click', userShowPages.bind(this));
+  this.announcementsLink.addEventListener('click', announcementShowPages.bind(this));
 
   //signinEvent
   this.signInButton.addEventListener('click', this.signIn.bind(this));
@@ -67,13 +67,16 @@ function myRoomReservation() {
 
   //initialize Firebase
   this.initFirebase();
+    
+  
+  
+
 }
 
 
 //hide or show pages
-myRoomReservation.prototype.dashboardShowPages = function () {
+function dashboardShowPages () {
 
- if(this.checkAdminUser()) {
   this.dashboardPage.removeAttribute('hidden');
   this.usersPage.setAttribute('hidden', true);
   this.profilePage.setAttribute('hidden', true);
@@ -83,106 +86,85 @@ myRoomReservation.prototype.dashboardShowPages = function () {
   this.editReservationPage.setAttribute('hidden', true);
   this.addRoomPage.setAttribute('hidden', true);
   this.editRoomPage.setAttribute('hidden', true);
+
+ if(userAdmin) {
+  this.usersLink.removeAttribute('hidden');
  } else {
-  this.dashboardPage.removeAttribute('hidden');
-  this.usersPage.setAttribute('hidden', true);
-  this.profilePage.setAttribute('hidden', true);
-  this.reservationsPage.setAttribute('hidden', true);
-  this.roomsPage.setAttribute('hidden', true);
-  this.addReservationPage.setAttribute('hidden', true);
-  this.editReservationPage.setAttribute('hidden', true);
-  this.addRoomPage.setAttribute('hidden', true);
-  this.editRoomPage.setAttribute('hidden', true);
+  this.usersLink.setAttribute('hidden', true);
  }
 
 }
 
 
-myRoomReservation.prototype.userShowPages = function () {
+function userShowPages() {
 
- if(this.checkAdminUser()) {
-  this.dashboardPage.setAttribute('hidden', true);
+ this.dashboardPage.setAttribute('hidden', true);
+ this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
+
+ if(userAdmin) {
   this.usersPage.removeAttribute('hidden');
-  this.profilePage.setAttribute('hidden', true);
-  this.reservationsPage.setAttribute('hidden', true);
-  this.roomsPage.setAttribute('hidden', true);
-  this.addReservationPage.setAttribute('hidden', true);
-  this.editReservationPage.setAttribute('hidden', true);
-  this.addRoomPage.setAttribute('hidden', true);
-  this.editRoomPage.setAttribute('hidden', true);
+  this.usersLink.removeAttribute('hidden');
  } else {
-  this.dashboardPage.setAttribute('hidden', true);
   this.usersPage.setAttribute('hidden', true);
-  this.profilePage.setAttribute('hidden', true);
-  this.reservationsPage.setAttribute('hidden', true);
-  this.roomsPage.setAttribute('hidden', true);
-  this.addReservationPage.setAttribute('hidden', true);
-  this.editReservationPage.setAttribute('hidden', true);
-  this.addRoomPage.setAttribute('hidden', true);
-  this.editRoomPage.setAttribute('hidden', true);
+  this.usersLink.setAttribute('hidden', true);
  }
 
 }
 
-myRoomReservation.prototype.roomShowPages = function () {
+function roomShowPages () {
 
- if(this.checkAdminUser()) {
+  console.log("Room Page, ", userAdmin);
   this.dashboardPage.setAttribute('hidden', true);
   this.usersPage.setAttribute('hidden', true);
   this.profilePage.setAttribute('hidden', true);
   this.reservationsPage.setAttribute('hidden', true);
   this.roomsPage.removeAttribute('hidden');
-  this.addRoomButton.setAttribute('hidden', true);
-  this.headActionsTable.removeAttribute('hidden');
   this.addReservationPage.setAttribute('hidden', true);
   this.editReservationPage.setAttribute('hidden', true);
   this.addRoomPage.setAttribute('hidden', true);
   this.editRoomPage.setAttribute('hidden', true);
- } else {
-  this.dashboardPage.setAttribute('hidden', true);
-  this.usersPage.setAttribute('hidden', true);
-  this.profilePage.setAttribute('hidden', true);
-  this.reservationsPage.setAttribute('hidden', true);
-  this.roomsPage.removeAttribute('hidden');
+
+ if(userAdmin) {
   this.addRoomButton.removeAttribute('hidden');
+  this.headActionsTable.removeAttribute('hidden');
+  this.usersLink.removeAttribute('hidden');
+ } else {
+  this.addRoomButton.setAttribute('hidden', true);
   this.headActionsTable.setAttribute('hidden', true);
-  this.addReservationPage.setAttribute('hidden', true);
-  this.editReservationPage.setAttribute('hidden', true);
-  this.addRoomPage.setAttribute('hidden', true);
-  this.editRoomPage.setAttribute('hidden', true);
+  this.usersLink.setAttribute('hidden', true);
  }
 
 }
 
-myRoomReservation.prototype.profileShowPages = function () {
+function profileShowPages () {
 
- if(this.checkAdminUser()) {
   this.dashboardPage.setAttribute('hidden', true);
   this.usersPage.setAttribute('hidden', true);
-  this.profilePage.removeAttribute('hidden');
   this.reservationsPage.setAttribute('hidden', true);
   this.roomsPage.setAttribute('hidden', true);
   this.addReservationPage.setAttribute('hidden', true);
   this.editReservationPage.setAttribute('hidden', true);
   this.addRoomPage.setAttribute('hidden', true);
   this.editRoomPage.setAttribute('hidden', true);
+
+ if(userAdmin) {
+  this.profilePage.removeAttribute('hidden');
+  this.usersLink.removeAttribute('hidden');
  } else {
-  this.dashboardPage.setAttribute('hidden', true);
-  this.usersPage.setAttribute('hidden', true);
   this.profilePage.removeAttribute('hidden');
-  this.reservationsPage.setAttribute('hidden', true);
-  this.roomsPage.setAttribute('hidden', true);
-  this.addReservationPage.setAttribute('hidden', true);
-  this.editReservationPage.setAttribute('hidden', true);
-  this.addRoomPage.setAttribute('hidden', true);
-  this.editRoomPage.setAttribute('hidden', true);
+  this.usersLink.setAttribute('hidden', true);
  }
 
 }
 
-myRoomReservation.prototype.reservationShowPages = function () {
+function reservationShowPages () {
 
- if(this.checkAdminUser()) {
   this.dashboardPage.setAttribute('hidden', true);
   this.usersPage.setAttribute('hidden', true);
   this.profilePage.setAttribute('hidden', true);
@@ -192,23 +174,17 @@ myRoomReservation.prototype.reservationShowPages = function () {
   this.editReservationPage.setAttribute('hidden', true);
   this.addRoomPage.setAttribute('hidden', true);
   this.editRoomPage.setAttribute('hidden', true);
+
+ if(userAdmin) {
+  this.usersLink.removeAttribute('hidden');
  } else {
-  this.dashboardPage.setAttribute('hidden', true);
-  this.usersPage.setAttribute('hidden', true);
-  this.profilePage.setAttribute('hidden', true);
-  this.reservationsPage.removeAttribute('hidden');
-  this.roomsPage.setAttribute('hidden', true);
-  this.addReservationPage.setAttribute('hidden', true);
-  this.editReservationPage.setAttribute('hidden', true);
-  this.addRoomPage.setAttribute('hidden', true);
-  this.editRoomPage.setAttribute('hidden', true);
+  this.usersLink.setAttribute('hidden', true);
  }
 
 }
 
-myRoomReservation.prototype.announcementShowPages = function () {
+function announcementShowPages () {
 
- if(this.checkAdminUser()) {
   this.dashboardPage.setAttribute('hidden', true);
   this.usersPage.setAttribute('hidden', true);
   this.profilePage.setAttribute('hidden', true);
@@ -218,16 +194,11 @@ myRoomReservation.prototype.announcementShowPages = function () {
   this.editReservationPage.setAttribute('hidden', true);
   this.addRoomPage.setAttribute('hidden', true);
   this.editRoomPage.setAttribute('hidden', true);
+
+ if(userAdmin) {
+  this.usersLink.removeAttribute('hidden');
  } else {
-  this.dashboardPage.setAttribute('hidden', true);
-  this.usersPage.setAttribute('hidden', true);
-  this.profilePage.setAttribute('hidden', true);
-  this.reservationsPage.setAttribute('hidden', true);
-  this.roomsPage.setAttribute('hidden', true);
-  this.addReservationPage.setAttribute('hidden', true);
-  this.editReservationPage.setAttribute('hidden', true);
-  this.addRoomPage.setAttribute('hidden', true);
-  this.editRoomPage.setAttribute('hidden', true);
+  this.usersLink.setAttribute('hidden', true);
  }
 
 }
@@ -246,6 +217,7 @@ myRoomReservation.prototype.initFirebase = function () {
   reservationsRef = this.firestore.collection("reservations");
   reservedListRef = this.firestore.collection("reservations").doc("reservationDetails").collection("reservedList");
   announcementsRef = this.firestore.collection("announcements");
+
 }
 
 //sign-in account
@@ -264,7 +236,28 @@ myRoomReservation.prototype.signIn = function () {
 
 myRoomReservation.prototype.onAuthStateChanged = function(user) {
   if (user) {
+
+    
     this.addUserInFirestore(user);
+
+    usersRef.doc(user.uid).get()
+    .then(function(doc) {
+      userAdmin= doc.data().admin;
+      if(userAdmin) {
+        console.log("Admin? ", userAdmin);
+
+      listReservedRooms(user);
+      listUsers(user);
+      listRooms();
+      dashboardShowPages();
+      userShowPages();
+      profileShowPages();
+      roomShowPages();
+      reservationShowPages();
+      }
+    }).catch(err => {
+      console.error("Error checking admin: ", err);
+    });
     this.loginPage.setAttribute('hidden', true);
     this.header.setAttribute('class', 'fix-header');
     this.sidebarHeader.removeAttribute('hidden');
@@ -274,6 +267,14 @@ myRoomReservation.prototype.onAuthStateChanged = function(user) {
     this.userNameHead.innerHTML = user.displayName;
     this.profilePicHead.setAttribute('src', user.photoURL);
     this.dashboardPage.removeAttribute('hidden');
+
+  } else {
+    this.loginPage.removeAttribute('hidden');
+    this.header.removeAttribute('class');
+    this.sidebarHeader.setAttribute('hidden', true);
+    this.dash_nav.setAttribute('hidden', true);
+    this.footer.setAttribute('hidden', true);
+    this.wrapperPage.setAttribute('style','display:none');
     this.usersPage.setAttribute('hidden', true);
     this.profilePage.setAttribute('hidden', true);
     this.reservationsPage.setAttribute('hidden', true);
@@ -282,14 +283,8 @@ myRoomReservation.prototype.onAuthStateChanged = function(user) {
     this.editReservationPage.setAttribute('hidden', true);
     this.addRoomPage.setAttribute('hidden', true);
     this.editRoomPage.setAttribute('hidden', true);
-    
-  } else {
-    this.loginPage.removeAttribute('hidden');
-    this.header.removeAttribute('class');
-    this.sidebarHeader.setAttribute('hidden', true);
-    this.dash_nav.setAttribute('hidden', true);
-    this.footer.setAttribute('hidden', true);
-    this.wrapperPage.setAttribute('style','display:none');
+  this.addRoomButton.setAttribute('hidden', true);
+  this.usersLink.setAttribute('hidden', true);
     console.log("User is NOT logged in.");
   }
 }
@@ -300,10 +295,9 @@ myRoomReservation.prototype.addUserInFirestore = function(user) {
 	.then(function(doc) {
 		if (doc.exists) {
 			console.info("User already existing.");
-      userAdmin = checkAdmin(user);
 		} else {
 			var addUser = usersRef.doc(user.uid).set({
-				admin: userAdmin,
+				admin: false,
 				email: user.email,
 				name: user.displayName,
 				profilePicture: user.photoURL || '/images/profile_placeholder.png',
@@ -332,10 +326,10 @@ myRoomReservation.prototype.checkSetup = function() {
 };
 
 //reserved rooms list
-function listReservedRooms(user, admin) {
+function listReservedRooms(user) {
 	var dateToday = new Date();
 	console.log("Load list of rooms...");
-	if(admin) { //for admins
+	if(userAdmin) { //for admins
 		var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
 		.onSnapshot(function(list) {
 	        if(list) {
@@ -412,9 +406,9 @@ function listReservedRooms(user, admin) {
 }
 
 //list users
-function listUsers(user, admin) {
+function listUsers(user) {
   console.log("Load list of users...");
-  if(admin) { //for admins
+  if(userAdmin) { //for admins
     var listAllUsers = usersRef.orderBy("name")
     .onSnapshot(function(list) {
           $('#list_users').empty();
@@ -447,7 +441,7 @@ function listUsers(user, admin) {
 }
 
 //list rooms
- function listRooms(admin) {
+function listRooms() {
   console.log("Load list of rooms...");
     var listAllRooms = roomsRef.orderBy("name")
     .onSnapshot(function(list) {
@@ -460,7 +454,7 @@ function listUsers(user, admin) {
                   if(rms.data().available) {
                     available = "Yes";
                   }
-                  if(admin) {
+                  if(userAdmin) {
                     $('#list_rooms').append($('<tr>',{
                         html: "<td>" + rms.data().name + "</td>" + 
                         "<td>" + rms.data().floor + "</td>" +
@@ -484,31 +478,6 @@ function listUsers(user, admin) {
           }
       });
  }
-
-//check user if admin and load details
-function checkAdmin(user) {
-  var checkUserAdmin = usersRef.doc(user.uid).get()
-  .then(function(doc) {
-    console.log("Check Admin: ", doc.data().admin);
-    listReservedRooms(user, doc.data().admin);
-    listUsers(user, doc.data().admin);
-    listRooms(doc.data().admin);
-  }).catch(err => {
-    console.error("Error checking admin: ", err);
-  });
-}
-
-//check user if admin
-myRoomReservation.prototype.checkAdminUser = function () {
-  var checkUserAdmin = usersRef.doc(this.auth.currentUser.uid).get()
-  .then(function(doc) {
-    console.log("Check Admin: ", doc.data().admin);
-    return doc.data().admin;
-  }).catch(err => {
-    console.error("Error checking admin: ", err);
-  });
-  return false;
-}
 
 //change user role
 function changeRole(userId) {
@@ -594,6 +563,7 @@ myRoomReservation.prototype.signOut = function () {
   window.location.reload();
 }
 
+
 //checks setup of the Firebase connection
 myRoomReservation.prototype.checkSetup = function() {
   if (!window.firebase || !(firebase.app instanceof Function) || !firebase.app().options) {
@@ -604,6 +574,8 @@ myRoomReservation.prototype.checkSetup = function() {
   	console.log("Successfully connected to Firebase!");
   }
 };
+
+
 
 //instantiates backend operations
 window.onload = function() {
