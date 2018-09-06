@@ -88,7 +88,7 @@ myRoomReservation.prototype.addUserInFirestore = function(user) {
 	.then(function(doc) {
 		if (doc.exists) {
 			console.info("User already existing.");
-      userAdmin = this.checkAdmin(user);
+      userAdmin = checkAdmin(user);
 		} else {
 			var addUser = usersRef.doc(user.uid).set({
 				admin: userAdmin,
@@ -119,26 +119,11 @@ myRoomReservation.prototype.checkSetup = function() {
   }
 };
 
-//check user if admin
-myRoomReservation.prototype.checkAdmin = function(user) {
-  var checkUserAdmin = usersRef.doc(user.uid).get()
-  .then(function(doc) {
-    console.log("Check Admin: ", doc.data().admin);
-    this.listReservedRooms(user);
-    return doc.data().admin;
-  }).catch(err => {
-    console.error("Error checking admin: ", err);
-  });
-
-  return false;
-}
-
 //reserved rooms list
-myRoomReservation.prototype.listReservedRooms = function(user) {
+function listReservedRooms(user, admin) {
 	var dateToday = new Date();
-	console.log("admin: ", this.checkAdmin(user));
 	console.log("dateToday: ", dateToday);
-	if(this.checkAdmin(user)) { //for admins
+	if(admin) { //for admins
 		var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
 		.onSnapshot(function(list) {
 	        if(list) {
@@ -178,7 +163,7 @@ myRoomReservation.prototype.listReservedRooms = function(user) {
 	        }
 	    });
 	} else { //for non-admins
-		var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).orderBy("reservedSchedule.from", "desc")
+		var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
     .onSnapshot(function(list) {
           if(list) {
             $('#list_reservation').empty();
@@ -186,7 +171,6 @@ myRoomReservation.prototype.listReservedRooms = function(user) {
                 list.forEach(function(rooms) {
                   var roomName;
                     var roomDetails = rooms.data();
-
                     if(rooms.get("reservedBy").path == "users/" + user.uid) {
 
                       var roomRef = firebase.firestore().doc(rooms.get("room").path).get().then(function(rm) {
@@ -211,6 +195,19 @@ myRoomReservation.prototype.listReservedRooms = function(user) {
           }
       });
 	}
+}
+
+//check user if admin
+function checkAdmin(user) {
+  var checkUserAdmin = usersRef.doc(user.uid).get()
+  .then(function(doc) {
+    console.log("Check Admin: ", doc.data().admin);
+    return listReservedRooms(user, doc.data().admin);
+  }).catch(err => {
+    console.error("Error checking admin: ", err);
+  });
+
+  return false;
 }
 
 //signout
