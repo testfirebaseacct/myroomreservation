@@ -67,7 +67,7 @@ myRoomReservation.prototype.signIn = function () {
 
 myRoomReservation.prototype.onAuthStateChanged = function(user) {
   if (user) {
-    this.addUserInFirestore(user);
+    this.userAdmin = this.addUserInFirestore(user);
     this.loginPage.setAttribute('hidden', true);
     this.header.setAttribute('class', 'fix-header');
     this.sidebarHeader.removeAttribute('hidden');
@@ -93,7 +93,7 @@ myRoomReservation.prototype.addUserInFirestore = function(user) {
 	.then(function(doc) {
 		if (doc.exists) {
 			console.info("User already existing.");
-			userAdmin = doc.data().admin;
+			var admin = doc.data().admin;
 		} else {
 			var addUser = usersRef.doc(user.uid).set({
 				admin: false,
@@ -110,7 +110,9 @@ myRoomReservation.prototype.addUserInFirestore = function(user) {
 	})
 	.catch(err => {
 		console.error("Failed to query user: ", err);
-	})
+	});
+
+  return admin;
 
 }
 
@@ -128,7 +130,7 @@ myRoomReservation.prototype.checkSetup = function() {
 //reserved rooms list
 myRoomReservation.prototype.listReservedRooms = function() {
 	var dateToday = new Date();
-	console.log("admin: ", userAdmin);
+	console.log("admin: ", this.userAdmin);
 	console.log("dateToday: ", dateToday);
 	if(true) {
 		var listAllReserved = reservedListRef.where("reservedSchedule", ">=", dateToday).orderBy("reservedSchedule", "desc")
@@ -144,7 +146,7 @@ myRoomReservation.prototype.listReservedRooms = function() {
 			                  html: "<td>" + count + "</td>" + 
 			                  "<td>" + rm.data().name + "</td>" +
 			                  "<td>" + roomDetails.status + "</td>" +
-			                  "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>"
+			                  "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>" +
 			                  "<td><span class='text-success'><a href='#'' class='waves-effect' id='cancel_reserve' onclick='cancelReservation(" + rooms.id + ")'><i class='fa fa-external-link fa-fw' aria-hidden='true'></i></a></span></td></tr>"
 			                }));  
 		                });
