@@ -123,7 +123,7 @@ myRoomReservation.prototype.checkSetup = function() {
 //reserved rooms list
 function listReservedRooms(user, admin) {
 	var dateToday = new Date();
-	console.log("dateToday: ", dateToday);
+	console.log("Load list of rooms...");
 	if(admin) { //for admins
 		var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
 		.onSnapshot(function(list) {
@@ -151,7 +151,7 @@ function listReservedRooms(user, admin) {
                           "<td>" + roomName + "</td>" +
                           "<td>" + userName + "</td>" +
                           "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>" +
-                          "<td><span class='text-success'><a href='#'' class='waves-effect' id='cancel_reserve' onclick='cancelReservation(" + rooms.id + ")'><i class='fa fa-external-link fa-fw' aria-hidden='true'></i></a></span></td></tr>"
+                          "<td><span class='text-success'><a href='#'' class='waves-effect' id='cancel_reserve' onclick='cancelReservation(\"" + rooms.id + "\")'><i class='fa fa-external-link fa-fw' aria-hidden='true'></i></a></span></td></tr>"
                         }));
                       }).catch(err => {
                         console.error("Error getting room details: ", err);
@@ -185,7 +185,7 @@ function listReservedRooms(user, admin) {
                           "<td>" + roomName + "</td>" +
                           "<td>" + roomDetails.status + "</td>" +
                           "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>" +
-                          "<td><span class='text-success'><a href='#'' class='waves-effect' id='cancel_reserve' onclick='cancelReservation(" + rooms.id + ")'><i class='fa fa-external-link fa-fw' aria-hidden='true'></i></a></span></td></tr>"
+                          "<td><span class='text-success'><a href='#' class='waves-effect' id='cancel_reserve' onclick='cancelReservation(\"" + roomDetails.id + "\")'><i class='fa fa-external-link fa-fw' aria-hidden='true'></i></a></span></td></tr>"
                         }));
                       }).catch(err => {
                         console.error("Error getting room details: ", err);
@@ -198,35 +198,72 @@ function listReservedRooms(user, admin) {
 	}
 }
 
+//list users
+function listUsers(user, admin) {
+  console.log("Load list of users...");
+  if(admin) { //for admins
+    var listAllUsers = usersRef.orderBy("name")
+    .onSnapshot(function(list) {
+          $('#list_users').empty();
+          if(list && list.size > 0) {
+              var count = 0; 
+                list.forEach(function(users) {
+                  if(users.data().userId != user.uid) {
+                    count += 1;
+                    if(users.data().admin) {
+                      $('#list_users').append($('<tr>',{
+                          html: "<td>" + count + "</td>" + 
+                          "<td>" + users.data().name + "</td>" +
+                          "<td>" + users.data().email + "</td>" +
+                          "<td style='width: 10% !important'><label class='container'>Admin<input type='checkbox' checked='checked' onchange='changeRole(\"" + users.data().userId + "\")'><span class='checkmark'></span></label></td></tr>"
+                      }));
+                    } else {
+                      $('#list_users').append($('<tr>',{
+                          html: "<td>" + count + "</td>" + 
+                          "<td>" + users.data().name + "</td>" +
+                          "<td>" + users.data().email + "</td>" +
+                          "<td style='width: 10% !important'><label class='container'>Admin<input type='checkbox' onchange='changeRole(\"" + users.data().userId + "\")'><span class='checkmark'></span></label></td></tr>"
+                      }));
+                    }
+                  }
+                })
+            console.log("Users list query completed!");
+          }
+      });
+  }
+}
+
 //check user if admin
 function checkAdmin(user) {
   var checkUserAdmin = usersRef.doc(user.uid).get()
   .then(function(doc) {
     console.log("Check Admin: ", doc.data().admin);
-    return listReservedRooms(user, doc.data().admin);
+    listReservedRooms(user, doc.data().admin);
+    listUsers(user, doc.data().admin);
   }).catch(err => {
     console.error("Error checking admin: ", err);
   });
-
-  return false;
 }
 
 //change user role
 function changeRole(userId) {
+  console.log("Changing role...");
   var userRoleRef = usersRef.doc(userId).get().then(function(usr) {
 
+    console.log("User: ", usr.data());
+    console.log("Admin? ", usr.data().admin);
     var isUserAdmin = usr.data().admin;
-    var addAdmin = false;
-    if(!isUserAdmin) {
-      addAdmin = true;
+    var addAdmin = true;
+    if(isUserAdmin) {
+      addAdmin = false;
     }
 
     usersRef.doc(userId).update({
       admin: addAdmin
     }).then(() => {
-      console.log("User admin role revoked.");
+      console.log("User role changed.");
     }).catch(err => {
-      console.error("Error revoking admin role: ", err);
+      console.error("Error changing role: ", err);
     });
 
   }).catch(err => {
