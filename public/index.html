@@ -309,7 +309,7 @@
                                     <td style="width: 40%" >jalagatuz@gmail.com</td>
                                     <td style="width: 10% !important" > 
                                       <label class="container">Admin
-                                        <input type="checkbox" checked="checked">
+                                        <input id="role_check" type="checkbox" checked="checked">
                                         <span class="checkmark"></span>
                                       </label>
                                     </td>
@@ -323,7 +323,7 @@
                 </div>
 
                 <!-- START ADMIN & !ADMIN VIEW PROFILE PAGE -->
-                <div class="container-fluid">
+                <div class="container-fluid" id="profile_page" >
                   <!-- /.row -->
                   <!-- .row -->
                   <div class="row">
@@ -344,17 +344,18 @@
                                   <div class="form-group">
                                       <label class="col-md-12" for="profile_page_name">Full Name</label>
                                       <div class="col-md-12">
-                                          <input type="text" placeholder="Janelle Ann Lagatuz" class="form-control form-control-line" id="profile_page_name" value="Janelle Ann Lagatuz"> </div>
+                                          <input disabled type="text" placeholder="Janelle Ann Lagatuz" class="form-control form-control-line" id="profile_page_name" value="Janelle Ann Lagatuz"> </div>
                                       </div>
                                   <div class="form-group">
                                       <label for="profile_page_email" class="col-md-12">Email</label>
                                       <div class="col-md-12">
-                                          <input type="email" placeholder="ja@admin.com" class="form-control form-control-line" name="profile_page_email" id="profile_page_email" value="ja@admin.com"></div>
+                                          <input disabled type="email" placeholder="ja@admin.com" class="form-control form-control-line" name="profile_page_email" id="profile_page_email" value="ja@admin.com"></div>
                                   </div>
                                   <div class="form-group">
                                       <label class="col-md-12">Password</label>
                                       <div class="col-md-12">
-                                          <input type="password" value="password" class="form-control form-control-line" id="profile_page_pw"> </div>
+                                         <input disabled type="password" value="password" class="form-control form-control-line" id="profile_page_pw">
+                                      </div>
                                   </div>
                                   <div class="form-group">
                                       <label for="profile_page_role" class="col-md-12">My Role</label>
@@ -363,11 +364,11 @@
                                           <span id="profile_page_role"><i>ADMIN/USER</i></span>
                                       </div>
                                   </div>
-                                  <div class="form-group">
+                                  <!-- <div class="form-group">
                                       <div class="col-sm-12">
                                           <button class="btn btn-success">Update Profile</button>
                                       </div>
-                                  </div>
+                                  </div> -->
                               </form>
                           </div>
                       </div>
@@ -408,10 +409,188 @@
                   </div>
                 <!-- END ADMIN & !ADMIN MY RESERVATION -->
 
+                <!-- START ADD NEW SCHEDULE DMIN & !ADMIN-->
+                <div class="container-fluid" id="add_new_booking">
+                  <!-- /.row -->
+                  <!-- .row -->
+                  <div class="row">
+                      <div class="col-md-12 col-xs-12">
+                        <div class="white-box">
+                          <h3 class="box-title">New Reservation</h3>
+                          <label  for="book_new_title">Title:</label>
+                          <div style="padding-bottom: 10px;">
+                              <input type="text" placeholder="Title" class="form-control form-control-line" id="book_new_title" >
+                          </div>
+
+                          <label  for="book_new_title">Description:</label>
+                          <div style="padding-bottom: 10px;">
+                              <textarea placeholder="Description" class="form-control form-control-line" id="book_new_desc" rows="4"></textarea>
+                          </div>
+
+                          <label  for="book_new_date">Date:</label>
+                          <div style="padding-bottom: 10px;">
+                            <input type="date"  class="form-control form-control-line" id="book_new_date" onclick="dateLimit()" >
+                            <script>
+                              function dateLimit() {
+                                  //Display Only Date till today // 
+                                  var dtToday = new Date();
+                                  var month = dtToday.getMonth() + 1;
+                                  var day = dtToday.getDate();
+                                  var year = dtToday.getFullYear();
+                                  if(month < 10)
+                                      month = '0' + month.toString();
+                                  if(day < 10)
+                                      day = '0' + day.toString();
+
+                                  var minDate = year + '-' + month + '-' + day;
+                                  $('#book_new_date').attr('min', minDate);
+                              }
+                            </script>
+                          </div>
+
+                          <label  for="book_new_time_fr">Time From:</label>
+                          <div style="padding-bottom: 10px;">
+                              <input type="time"  class="form-control form-control-line" id="book_new_time_fr" > 
+                          </div>
+                             
+                          <label  for="book_new_time_to">Time To:</label>
+                          <div style="padding-bottom: 10px;">
+                              <input type="time"  class="form-control form-control-line" id="book_new_time_to" >
+                          </div>
+                         
+                          <div style="padding-bottom: 10px;">
+                              <label for="book_new_rooms">Select list:</label>
+                              <select class="form-control" id="book_new_rooms" style="height: 35px;;">
+                                <option>Select One</option>
+                                <option value="couldBetheIdOfTheRoom">SANGANDAAN</option>
+                                <option>BACLARAN</option>
+                                <option>ROXAS</option>
+                              </select>
+                          </div>
+
+                          <label  for="book_new_guest">Guest:</label>
+                          <div style="padding-bottom: 10px;">
+                              <textarea placeholder="Separate emails by comma" class="form-control form-control-line" id="book_new_guest" rows="4"></textarea>
+                          </div>
+
+                          <label  for="book_new_opt_guest">Optional Guest:</label>
+                          <div style="padding-bottom: 10px;">
+                              <textarea placeholder="Separate emails by comma" class="form-control form-control-line" id="book_new_opt_guest" rows="4"></textarea>
+                          </div>
+
+                          <label>Attachments:</label>
+                          <div style="padding-bottom: 10px;">
+                              <input type="file" id="book_new_attach_1" >
+                          </div>
+                          <div style="padding-bottom: 10px;">
+                              <input type="file" id="book_new_attach_2" >
+                          </div>
+                          <div style="padding-bottom: 10px;">
+                              <input type="file" id="book_new_attach_3" >
+                          </div>
+                          <div style="padding-top: 25px;">
+                            <span class="text-success" id="btn_new_sched_add" ><a href="#" class="waves-effect"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>Create</a></span>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <!-- END ADD NEW SCHEDULE -->
+
+                <!-- START EDIT BOOKING DMIN & !ADMIN-->
+                <div class="container-fluid" id="edit_booking">
+                  <!-- /.row -->
+                  <!-- .row -->
+                  <div class="row">
+                      <div class="col-md-12 col-xs-12">
+                        <div class="white-box">
+                          <h3 class="box-title">Edit Reservation</h3>
+                          <label  for="edit_new_title">Title:</label>
+                          <div style="padding-bottom: 10px;">
+                              <input type="text" placeholder="Exisitng Title" class="form-control form-control-line" id="edit_new_title" >
+                          </div>
+
+                          <label  for="edit_new_desc">Description:</label>
+                          <div style="padding-bottom: 10px;">
+                              <textarea placeholder="Exisitng Description" class="form-control form-control-line" id="edit_new_desc" rows="4"></textarea>
+                          </div>
+
+                          <label  for="edit_new_date">Date:</label>
+                          <div style="padding-bottom: 10px;">
+                            <input type="date"  class="form-control form-control-line" id="edit_new_date" onclick="dateLimit()" >
+                            <script>
+                              function dateLimit() {
+                                  //Display Only Date till today // 
+                                  var dtToday = new Date();
+                                  var month = dtToday.getMonth() + 1;     // getMonth() is zero-based
+                                  var day = dtToday.getDate();
+                                  var year = dtToday.getFullYear();
+                                  if(month < 10)
+                                      month = '0' + month.toString();
+                                  if(day < 10)
+                                      day = '0' + day.toString();
+
+                                  var minDate = year + '-' + month + '-' + day;
+                                  $('#book_new_date').attr('min', minDate);
+                              }
+                            </script>
+                          </div>
+
+                          <label  for="edit_new_time_fr">Time From:</label>
+                          <div style="padding-bottom: 10px;">
+                              <input type="time"  class="form-control form-control-line" id="edit_new_time_fr" > 
+                          </div>
+                              
+                          <label  for="edit_new_time_to">Time To:</label>
+                          <div style="padding-bottom: 10px;">
+                              <input type="time"  class="form-control form-control-line" id="edit_new_time_to" >
+                          </div>
+                          
+                          <div style="padding-bottom: 10px;">
+                              <label for="edit_new_rooms">Select list:</label>
+                              <select class="form-control" id="edit_new_rooms" style="height: 35px;;">
+                                <option>Select One</option>
+                                <option value="couldBetheIdOfTheRoom">SANGANDAAN</option>
+                                <option>BACLARAN</option>
+                                <option>ROXAS</option>
+                              </select>
+                          </div>
+
+                          <label  for="edit_new_guest">Guest:</label>
+                          <div style="padding-bottom: 10px;">
+                              <textarea placeholder="Exisitng guest emails" class="form-control form-control-line" id="edit_new_guest" rows="4"></textarea>
+                          </div>
+
+                          <label  for="edit_new_opt_guest">Optional Guest:</label>
+                          <div style="padding-bottom: 10px;">
+                              <textarea placeholder="Exisitng guest emails" class="form-control form-control-line" id="edit_new_opt_guest" rows="4"></textarea>
+                          </div>
+
+                          <label>Attachments:</label>
+                          <div style="padding-bottom: 10px;">
+                              <input type="file" id="edit_new_attach_1" >
+                          </div>
+                          <div style="padding-bottom: 10px;">
+                              <input type="file" id="edit_new_attach_2" >
+                          </div>
+                          <div style="padding-bottom: 10px;">
+                              <input type="file" id="edit_new_attach_3" >
+                          </div>
+                          <div style="padding-top: 25px;">
+                            <span class="text-success" id="btn_new_sched_edit" ><a href="#" class="waves-effect"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>Edit Reservation</a></span>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <!-- END ADD NEW SCHEDULE -->
+
                 <!-- END ADMIN VIEW -->
                 
               <!-- /.container-fluid -->
-              <footer class="footer text-center" id="footer"> 2018* &copy; Hackathon * Noobita </footer>
+              <footer class="footer text-center" id="footer" style="position: fixed; bottom: 0;"> 2018* &copy; Hackathon * Noobita </footer>
           </div>
           <!-- ============================================================== -->
           <!-- End Page Content -->
