@@ -73,7 +73,7 @@ function myRoomReservation() {
 //hide or show pages
 myRoomReservation.prototype.dashboardShowPages = function () {
 
- if(userAdmin) {
+ if(this.checkAdminUser()) {
   this.dashboardPage.removeAttribute('hidden');
   this.usersPage.setAttribute('hidden', true);
   this.profilePage.setAttribute('hidden', true);
@@ -100,7 +100,7 @@ myRoomReservation.prototype.dashboardShowPages = function () {
 
 myRoomReservation.prototype.userShowPages = function () {
 
- if(userAdmin) {
+ if(this.checkAdminUser()) {
   this.dashboardPage.setAttribute('hidden', true);
   this.usersPage.removeAttribute('hidden');
   this.profilePage.setAttribute('hidden', true);
@@ -126,7 +126,7 @@ myRoomReservation.prototype.userShowPages = function () {
 
 myRoomReservation.prototype.roomShowPages = function () {
 
- if(userAdmin) {
+ if(this.checkAdminUser()) {
   this.dashboardPage.setAttribute('hidden', true);
   this.usersPage.setAttribute('hidden', true);
   this.profilePage.setAttribute('hidden', true);
@@ -156,7 +156,7 @@ myRoomReservation.prototype.roomShowPages = function () {
 
 myRoomReservation.prototype.profileShowPages = function () {
 
- if(userAdmin) {
+ if(this.checkAdminUser()) {
   this.dashboardPage.setAttribute('hidden', true);
   this.usersPage.setAttribute('hidden', true);
   this.profilePage.removeAttribute('hidden');
@@ -182,7 +182,7 @@ myRoomReservation.prototype.profileShowPages = function () {
 
 myRoomReservation.prototype.reservationShowPages = function () {
 
- if(userAdmin) {
+ if(this.checkAdminUser()) {
   this.dashboardPage.setAttribute('hidden', true);
   this.usersPage.setAttribute('hidden', true);
   this.profilePage.setAttribute('hidden', true);
@@ -208,7 +208,7 @@ myRoomReservation.prototype.reservationShowPages = function () {
 
 myRoomReservation.prototype.announcementShowPages = function () {
 
- if(userAdmin) {
+ if(this.checkAdminUser()) {
   this.dashboardPage.setAttribute('hidden', true);
   this.usersPage.setAttribute('hidden', true);
   this.profilePage.setAttribute('hidden', true);
@@ -485,7 +485,7 @@ function listUsers(user, admin) {
       });
  }
 
-//check user if admin
+//check user if admin and load details
 function checkAdmin(user) {
   var checkUserAdmin = usersRef.doc(user.uid).get()
   .then(function(doc) {
@@ -496,6 +496,18 @@ function checkAdmin(user) {
   }).catch(err => {
     console.error("Error checking admin: ", err);
   });
+}
+
+//check user if admin
+myRoomReservation.prototype.checkAdminUser = function () {
+  var checkUserAdmin = usersRef.doc(this.auth.currentUser.uid).get()
+  .then(function(doc) {
+    console.log("Check Admin: ", doc.data().admin);
+    return doc.data().admin;
+  }).catch(err => {
+    console.error("Error checking admin: ", err);
+  });
+  return false;
 }
 
 //change user role
