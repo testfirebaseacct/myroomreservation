@@ -4,6 +4,7 @@ var usersRef;
 var roomsRef;
 var reservationsRef;
 var reservedListRef;
+var announcementsRef;
 var userAdmin = false;
 
 function myRoomReservation() {
@@ -73,25 +74,25 @@ function myRoomReservation() {
 myRoomReservation.prototype.dashboardShowPages = function () {
 
  if(userAdmin) {
-  dashboardPage.removeAttribute('hidden');
-  usersPage.setAttribute('hidden', true);
-  profilePage.setAttribute('hidden', true);
-  reservationsPage.setAttribute('hidden', true);
-  roomsPage.setAttribute('hidden', true);
-  addReservationPage.setAttribute('hidden', true);
-  editReservationPage.setAttribute('hidden', true);
-  addRoomPage.setAttribute('hidden', true);
-  editRoomPage.setAttribute('hidden', true);
+  this.dashboardPage.removeAttribute('hidden');
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
  } else {
-  dashboardPage.removeAttribute('hidden');
-  usersPage.setAttribute('hidden', true);
-  profilePage.setAttribute('hidden', true);
-  reservationsPage.setAttribute('hidden', true);
-  roomsPage.setAttribute('hidden', true);
-  addReservationPage.setAttribute('hidden', true);
-  editReservationPage.setAttribute('hidden', true);
-  addRoomPage.setAttribute('hidden', true);
-  editRoomPage.setAttribute('hidden', true);
+  this.dashboardPage.removeAttribute('hidden');
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
  }
 
 }
@@ -100,25 +101,25 @@ myRoomReservation.prototype.dashboardShowPages = function () {
 myRoomReservation.prototype.userShowPages = function () {
 
  if(userAdmin) {
-  dashboardPage.setAttribute('hidden', true);
-  usersPage.removeAttribute('hidden');
-  profilePage.setAttribute('hidden', true);
-  reservationsPage.setAttribute('hidden', true);
-  roomsPage.setAttribute('hidden', true);
-  addReservationPage.setAttribute('hidden', true);
-  editReservationPage.setAttribute('hidden', true);
-  addRoomPage.setAttribute('hidden', true);
-  editRoomPage.setAttribute('hidden', true);
+  this.dashboardPage.setAttribute('hidden', true);
+  this.usersPage.removeAttribute('hidden');
+  this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
  } else {
-  dashboardPage.setAttribute('hidden', true);
-  usersPage.setAttribute('hidden', true);
-  profilePage.setAttribute('hidden', true);
-  reservationsPage.setAttribute('hidden', true);
-  roomsPage.setAttribute('hidden', true);
-  addReservationPage.setAttribute('hidden', true);
-  editReservationPage.setAttribute('hidden', true);
-  addRoomPage.setAttribute('hidden', true);
-  editRoomPage.setAttribute('hidden', true);
+  this.dashboardPage.setAttribute('hidden', true);
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
  }
 
 }
@@ -126,29 +127,29 @@ myRoomReservation.prototype.userShowPages = function () {
 myRoomReservation.prototype.roomShowPages = function () {
 
  if(userAdmin) {
-  dashboardPage.setAttribute('hidden', true);
-  usersPage.setAttribute('hidden', true);
-  profilePage.setAttribute('hidden', true);
-  reservationsPage.setAttribute('hidden', true);
-  roomsPage.removeAttribute('hidden');
-  addRoomButton.setAttribute('hidden', true);
-  headActionsTable.removeAttribute('hidden');
-  addReservationPage.setAttribute('hidden', true);
-  editReservationPage.setAttribute('hidden', true);
-  addRoomPage.setAttribute('hidden', true);
-  editRoomPage.setAttribute('hidden', true);
+  this.dashboardPage.setAttribute('hidden', true);
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.removeAttribute('hidden');
+  this.addRoomButton.setAttribute('hidden', true);
+  this.headActionsTable.removeAttribute('hidden');
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
  } else {
-  dashboardPage.setAttribute('hidden', true);
-  usersPage.setAttribute('hidden', true);
-  profilePage.setAttribute('hidden', true);
-  reservationsPage.setAttribute('hidden', true);
-  roomsPage.removeAttribute('hidden');
-  addRoomButton.removeAttribute('hidden');
-  headActionsTable.setAttribute('hidden', true);
-  addReservationPage.setAttribute('hidden', true);
-  editReservationPage.setAttribute('hidden', true);
-  addRoomPage.setAttribute('hidden', true);
-  editRoomPage.setAttribute('hidden', true);
+  this.dashboardPage.setAttribute('hidden', true);
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.removeAttribute('hidden');
+  this.addRoomButton.removeAttribute('hidden');
+  this.headActionsTable.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
  }
 
 }
@@ -156,25 +157,25 @@ myRoomReservation.prototype.roomShowPages = function () {
 myRoomReservation.prototype.profileShowPages = function () {
 
  if(userAdmin) {
-  dashboardPage.setAttribute('hidden', true);
-  usersPage.setAttribute('hidden', true);
-  profilePage.removeAttribute('hidden');
-  reservationsPage.setAttribute('hidden', true);
-  roomsPage.setAttribute('hidden', true);
-  addReservationPage.setAttribute('hidden', true);
-  editReservationPage.setAttribute('hidden', true);
-  addRoomPage.setAttribute('hidden', true);
-  editRoomPage.setAttribute('hidden', true);
+  this.dashboardPage.setAttribute('hidden', true);
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.removeAttribute('hidden');
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
  } else {
-  dashboardPage.setAttribute('hidden', true);
-  usersPage.setAttribute('hidden', true);
-  profilePage.removeAttribute('hidden');
-  reservationsPage.setAttribute('hidden', true);
-  roomsPage.setAttribute('hidden', true);
-  addReservationPage.setAttribute('hidden', true);
-  editReservationPage.setAttribute('hidden', true);
-  addRoomPage.setAttribute('hidden', true);
-  editRoomPage.setAttribute('hidden', true);
+  this.dashboardPage.setAttribute('hidden', true);
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.removeAttribute('hidden');
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
  }
 
 }
@@ -182,25 +183,25 @@ myRoomReservation.prototype.profileShowPages = function () {
 myRoomReservation.prototype.reservationShowPages = function () {
 
  if(userAdmin) {
-  dashboardPage.setAttribute('hidden', true);
-  usersPage.setAttribute('hidden', true);
-  profilePage.setAttribute('hidden', true);
-  reservationsPage.removeAttribute('hidden');
-  roomsPage.setAttribute('hidden', true);
-  addReservationPage.setAttribute('hidden', true);
-  editReservationPage.setAttribute('hidden', true);
-  addRoomPage.setAttribute('hidden', true);
-  editRoomPage.setAttribute('hidden', true);
+  this.dashboardPage.setAttribute('hidden', true);
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.removeAttribute('hidden');
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
  } else {
-  dashboardPage.setAttribute('hidden', true);
-  usersPage.setAttribute('hidden', true);
-  profilePage.setAttribute('hidden', true);
-  reservationsPage.removeAttribute('hidden');
-  roomsPage.setAttribute('hidden', true);
-  addReservationPage.setAttribute('hidden', true);
-  editReservationPage.setAttribute('hidden', true);
-  addRoomPage.setAttribute('hidden', true);
-  editRoomPage.setAttribute('hidden', true);
+  this.dashboardPage.setAttribute('hidden', true);
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.removeAttribute('hidden');
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
  }
 
 }
@@ -208,25 +209,25 @@ myRoomReservation.prototype.reservationShowPages = function () {
 myRoomReservation.prototype.announcementShowPages = function () {
 
  if(userAdmin) {
-  dashboardPage.setAttribute('hidden', true);
-  usersPage.setAttribute('hidden', true);
-  profilePage.setAttribute('hidden', true);
-  reservationsPage.setAttribute('hidden', true);
-  roomsPage.setAttribute('hidden', true);
-  addReservationPage.setAttribute('hidden', true);
-  editReservationPage.setAttribute('hidden', true);
-  addRoomPage.setAttribute('hidden', true);
-  editRoomPage.setAttribute('hidden', true);
+  this.dashboardPage.setAttribute('hidden', true);
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
  } else {
-  dashboardPage.setAttribute('hidden', true);
-  usersPage.setAttribute('hidden', true);
-  profilePage.setAttribute('hidden', true);
-  reservationsPage.setAttribute('hidden', true);
-  roomsPage.setAttribute('hidden', true);
-  addReservationPage.setAttribute('hidden', true);
-  editReservationPage.setAttribute('hidden', true);
-  addRoomPage.setAttribute('hidden', true);
-  editRoomPage.setAttribute('hidden', true);
+  this.dashboardPage.setAttribute('hidden', true);
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
  }
 
 }
