@@ -152,7 +152,8 @@ function listReservedRooms(user, admin) {
                           "<td>" + roomName + "</td>" +
                           "<td>" + userName + "</td>" +
                           "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>" +
-                          "<td><span class='text-success'><a href='#'' class='waves-effect' id='cancel_reserve' onclick='cancelReservation(\"" + rooms.id + "\")'><i class='fa fa-external-link fa-fw' aria-hidden='true'></i></a></span></td></tr>"
+                          "<td><span class='text-success'><a href='#' class='waves-effect' onclick='editReservation(\"" + roomDetails.id + "\")'><i class='fa fa-edit' aria-hidden='true' title='Edit Reservation'></i></a><br>" +
+                          "<a href='#' class='waves-effect' onclick='cancelReservation(\"" + roomDetails.id + "\")'><i class='fa fa-trash-o' aria-hidden='true' title='Delete Reservation'></i></a></span></td></tr>"
                         }));
                       }).catch(err => {
                         console.error("Error getting room details: ", err);
@@ -186,7 +187,8 @@ function listReservedRooms(user, admin) {
                           "<td>" + roomName + "</td>" +
                           "<td>" + roomDetails.status + "</td>" +
                           "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>" +
-                          "<td><span class='text-success'><a href='#' class='waves-effect' id='cancel_reserve' onclick='cancelReservation(\"" + roomDetails.id + "\")'><i class='fa fa-external-link fa-fw' aria-hidden='true'></i></a></span></td></tr>"
+                          "<td><span class='text-success'><a href='#' class='waves-effect' onclick='editReservation(\"" + roomDetails.id + "\")'><i class='fa fa-edit' aria-hidden='true' title='Edit Reservation'></i></a><br>" +
+                          "<a href='#' class='waves-effect' onclick='cancelReservation(\"" + roomDetails.id + "\")'><i class='fa fa-trash-o' aria-hidden='true' title='Delete Reservation'></i></a></span></td></tr>"
                         }));
                       }).catch(err => {
                         console.error("Error getting room details: ", err);
