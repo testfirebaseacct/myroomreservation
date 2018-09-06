@@ -71,6 +71,7 @@ myRoomReservation.prototype.onAuthStateChanged = function(user) {
     this.dash_nav.removeAttribute('hidden');
     this.footer.removeAttribute('hidden');
     this.wrapperPage.removeAttribute('style');
+    
   } else {
     this.loginPage.removeAttribute('hidden');
     this.header.removeAttribute('class');
