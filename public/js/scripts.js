@@ -8,7 +8,7 @@ var userAdmin = false;
 
 function myRoomReservation() {
   this.checkSetup();
-  //pages
+  //main page entities
   this.loginPage = document.getElementById('login_form_holder');
   this.dash_nav = document.getElementById('dash_nav');
   this.wrapperPage = document.getElementById('wrapper');
@@ -17,11 +17,24 @@ function myRoomReservation() {
   this.dash_nav = document.getElementById('dash_nav');
   this.footer = document.getElementById('footer');
 
-  //navigations
+  //main pages
+  this.dashboardPage = document.getElementById('admin_list_reservations');
   this.usersPage = document.getElementById('admin_list_users');
   this.profilePage = document.getElementById('profile_page');
   this.reservationsPage = document.getElementById('list_my_reservations');
   this.roomsPage = document.getElementById('admin_list_of_rooms');
+
+  //links for navs
+  this.dashboardLink = document.getElementById('dashboardLink');
+  this.reservationsLink = document.getElementById('reservationsLink');
+  this.profileLink = document.getElementById('profileLink');
+  this.roomsLink = document.getElementById('roomsLink');
+  this.usersLink = document.getElementById('usersLink');
+  this.announcementsLink = document.getElementById('announcementsLink');
+
+  //entities from pages
+  this.addRoomButton = document.getElementById('add_new_room');
+  this.headActionsTable = document.getElementById('actions_head_room');
 
   //userheader
   this.profilePicHead = document.getElementById('profilePic');
@@ -33,6 +46,14 @@ function myRoomReservation() {
   //logout object
   this.logoutLink = document.getElementById('logoutLink');
 
+  //navsEvents
+  this.dashboardLink.addEventListener('click', this.dashboardShowPages.bind(this));
+  this.reservationsLink.addEventListener('click', this.reservationShowPages.bind(this));
+  this.profileLink.addEventListener('click', this.profileShowPages.bind(this));
+  this.roomsLink.addEventListener('click', this.roomShowPages.bind(this));
+  this.usersLink.addEventListener('click', this.userShowPages.bind(this));
+  this.announcementsLink.addEventListener('click', this.announcementShowPages.bind(this));
+
   //signinEvent
   this.signInButton.addEventListener('click', this.signIn.bind(this));
 
@@ -41,6 +62,121 @@ function myRoomReservation() {
 
   //initialize Firebase
   this.initFirebase();
+}
+
+
+//hide or show pages
+myRoomReservation.prototype.dashboardShowPages = function () {
+
+ if(userAdmin) {
+  dashboardPage.removeAttribute('hidden');
+  usersPage.setAttribute('hidden', true);
+  profilePage.setAttribute('hidden', true);
+  reservationsPage.setAttribute('hidden', true);
+  roomsPage.setAttribute('hidden', true);
+ } else {
+  dashboardPage.removeAttribute('hidden');
+  usersPage.setAttribute('hidden', true);
+  profilePage.setAttribute('hidden', true);
+  reservationsPage.setAttribute('hidden', true);
+  roomsPage.setAttribute('hidden', true);
+ }
+
+}
+
+
+myRoomReservation.prototype.userShowPages = function () {
+
+ if(userAdmin) {
+  dashboardPage.setAttribute('hidden', true);
+  usersPage.removeAttribute('hidden');
+  profilePage.setAttribute('hidden', true);
+  reservationsPage.setAttribute('hidden', true);
+  roomsPage.setAttribute('hidden', true);
+ } else {
+  dashboardPage.setAttribute('hidden', true);
+  usersPage.setAttribute('hidden', true);
+  profilePage.setAttribute('hidden', true);
+  reservationsPage.setAttribute('hidden', true);
+  roomsPage.setAttribute('hidden', true);
+ }
+
+}
+
+myRoomReservation.prototype.roomShowPages = function () {
+
+ if(userAdmin) {
+  dashboardPage.setAttribute('hidden', true);
+  usersPage.setAttribute('hidden', true);
+  profilePage.setAttribute('hidden', true);
+  reservationsPage.setAttribute('hidden', true);
+  roomsPage.removeAttribute('hidden');
+  addRoomButton.setAttribute('hidden', true);
+  headActionsTable.removeAttribute('hidden');
+ } else {
+  dashboardPage.setAttribute('hidden', true);
+  usersPage.setAttribute('hidden', true);
+  profilePage.setAttribute('hidden', true);
+  reservationsPage.setAttribute('hidden', true);
+  roomsPage.removeAttribute('hidden');
+  addRoomButton.removeAttribute('hidden');
+  headActionsTable.setAttribute('hidden', true);
+ }
+
+}
+
+myRoomReservation.prototype.profileShowPages = function () {
+
+ if(userAdmin) {
+  dashboardPage.setAttribute('hidden', true);
+  usersPage.setAttribute('hidden', true);
+  profilePage.removeAttribute('hidden');
+  reservationsPage.setAttribute('hidden', true);
+  roomsPage.setAttribute('hidden', true);
+ } else {
+  dashboardPage.setAttribute('hidden', true);
+  usersPage.setAttribute('hidden', true);
+  profilePage.removeAttribute('hidden');
+  reservationsPage.setAttribute('hidden', true);
+  roomsPage.setAttribute('hidden', true);
+ }
+
+}
+
+myRoomReservation.prototype.reservationShowPages = function () {
+
+ if(userAdmin) {
+  dashboardPage.setAttribute('hidden', true);
+  usersPage.setAttribute('hidden', true);
+  profilePage.setAttribute('hidden', true);
+  reservationsPage.removeAttribute('hidden');
+  roomsPage.setAttribute('hidden', true);
+ } else {
+  dashboardPage.setAttribute('hidden', true);
+  usersPage.setAttribute('hidden', true);
+  profilePage.setAttribute('hidden', true);
+  reservationsPage.removeAttribute('hidden');
+  roomsPage.setAttribute('hidden', true);
+ }
+
+}
+
+myRoomReservation.prototype.announcementShowPages = function () {
+
+ if(userAdmin) {
+  dashboardPage.setAttribute('hidden', true);
+  usersPage.setAttribute('hidden', true);
+  profilePage.setAttribute('hidden', true);
+  reservationsPage.setAttribute('hidden', true);
+  roomsPage.setAttribute('hidden', true);
+ } else {
+  dashboardPage.setAttribute('hidden', true);
+  usersPage.setAttribute('hidden', true);
+  profilePage.setAttribute('hidden', true);
+  reservationsPage.setAttribute('hidden', true);
+  roomsPage.setAttribute('hidden', true);
+ }
+
 }
 
 //initialize Firebase services
@@ -84,6 +220,11 @@ myRoomReservation.prototype.onAuthStateChanged = function(user) {
     this.wrapperPage.removeAttribute('style');
     this.userNameHead.innerHTML = user.displayName;
     this.profilePicHead.setAttribute('src', user.photoURL);
+    this.dashboardPage.removeAttribute('hidden');
+    this.usersPage.setAttribute('hidden', true);
+    this.profilePage.setAttribute('hidden', true);
+    this.reservationsPage.setAttribute('hidden', true);
+    this.roomsPage.setAttribute('hidden', true);
     
   } else {
     this.loginPage.removeAttribute('hidden');
@@ -248,6 +389,45 @@ function listUsers(user, admin) {
   }
 }
 
+//list rooms
+ function listRooms(admin) {
+  console.log("Load list of rooms...");
+    var listAllRooms = roomsRef.orderBy("name")
+    .onSnapshot(function(list) {
+          $('#list_rooms').empty();
+          if(list) {
+              var count = 0; 
+                list.forEach(function(rms) {
+                  count += 1;
+                  var available = "No";
+                  if(rms.data().available) {
+                    available = "Yes";
+                  }
+                  if(admin) {
+                    $('#list_rooms').append($('<tr>',{
+                        html: "<td>" + rms.data().name + "</td>" + 
+                        "<td>" + rms.data().floor + "</td>" +
+                        "<td>" + available + "</td>" +
+                        "<td>" + rms.data().capacity + "</td>" +
+                        "<td>" + rms.data().equipments + "</td>" +
+                        "<td class='cil-md-1'><span class='text-success'><a href='#' class='waves-effect' onclick='editRoom(\"" + rms.id + "\")'><i class='fa fa-pencil-square-o fa-fw' aria-hidden='true' title='Edit Room'></i></a></span></td>" +
+                        "<td class='cil-md-1'><span class='text-success'><a href='#' class='waves-effect' onclick='deleteRoom(\"" + rms.id + "\")'><i class='fa fa-trash-o fa-fw' aria-hidden='true' title='Delete Room'></i></a></span></td></tr>"
+                    }));
+                  } else {
+                    $('#list_rooms').append($('<tr>',{
+                        html: "<td>" + rms.data().name + "</td>" + 
+                        "<td>" + rms.data().floor + "</td>" +
+                        "<td>" + available + "</td>" +
+                        "<td>" + rms.data().capacity + "</td>" +
+                        "<td>" + rms.data().equipments + "</td></tr>"
+                    }));
+                  }
+                })
+            console.log("Rooms list query completed!");
+          }
+      });
+ }
+
 //check user if admin
 function checkAdmin(user) {
   var checkUserAdmin = usersRef.doc(user.uid).get()
@@ -255,6 +435,7 @@ function checkAdmin(user) {
     console.log("Check Admin: ", doc.data().admin);
     listReservedRooms(user, doc.data().admin);
     listUsers(user, doc.data().admin);
+    listRooms(doc.data().admin);
   }).catch(err => {
     console.error("Error checking admin: ", err);
   });
@@ -291,7 +472,7 @@ function cancelReservation(reservationId) {
     console.log("Cancelation successful.");
   }).catch(err => {
     console.error("Reservation cancelation failed: ", err);
-  })
+  });
 }
 
 //room deletion
@@ -301,7 +482,7 @@ function deleteRoom(roomId) {
     console.log("Room deleted successfully.");
   }).catch(err => {
     console.error("Room deletion failed: ", err);
-  })
+  });
 }
 
 //announcement deletion
@@ -311,7 +492,7 @@ function deleteAnnouncement(announcementId) {
     console.log("Announcement deleted successfully.");
   }).catch(err => {
     console.error("Announcement deletion failed: ", err);
-  })
+  });
 }
 
 //change rool availability
