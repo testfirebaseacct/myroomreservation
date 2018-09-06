@@ -245,7 +245,7 @@
           <div id="page-wrapper">
               <!-- START ADMIN VIEW -->
 
-              <!-- ADMIN VIEW DASHBOARD -->
+              <!-- ADMIN VIEW DASHBOARD / hide this if the user is not admin -->
 
               <div class="container-fluid" id="admin_list_reservations"  >
                 <!-- ============================================================== -->
@@ -299,7 +299,7 @@
                                     <th style="width: 30%">#</th>
                                     <th style="width: 40%">NAME</th>
                                     <th style="width: 40%">EMAIL</th>
-                                    <th style="width: 30%">ROLE</th>
+                                    <th style="width: 30%">CHANGE ROLE</th>
                                 </tr>
                             </thead>
                             <tbody id="list_users">
@@ -322,73 +322,45 @@
                   </div>
                 </div>
 
-                <!-- START ADMIN VIEW PROFILE PAGE -->
+                <!-- START ADMIN & !ADMIN VIEW PROFILE PAGE -->
                 <div class="container-fluid">
                   <!-- /.row -->
                   <!-- .row -->
                   <div class="row">
-                      <div class="col-md-4 col-xs-12">
+                      <div class="col-md-12 col-xs-12">
                           <div class="white-box">
-                              <div class="user-bg"> <img width="100%" alt="user" src="plugins/images/large/img1.jpg">
+                              <div class="user-bg"> <img width="100%" alt="user" src="plugins/images/users/genu.jpg">
                                   <div class="overlay-box">
                                       <div class="user-content">
                                           <a href="javascript:void(0)"><img src="plugins/images/users/genu.jpg" class="thumb-lg img-circle" alt="img"></a>
-                                          <h4 class="text-white">User Name</h4>
-                                          <h5 class="text-white">info@myadmin.com</h5> </div>
+                                          <h4 class="text-white">Janelle Ann Lagatuz</h4>
+                                          <h5 class="text-white">ja@myadmin.com</h5> </div>
                                   </div>
                               </div>
-                              <div class="user-btm-box">
-                                  <div class="col-md-4 col-sm-4 text-center">
-                                      <p class="text-purple"><i class="ti-facebook"></i></p>
-                                      <h1>258</h1> </div>
-                                  <div class="col-md-4 col-sm-4 text-center">
-                                      <p class="text-blue"><i class="ti-twitter"></i></p>
-                                      <h1>125</h1> </div>
-                                  <div class="col-md-4 col-sm-4 text-center">
-                                      <p class="text-danger"><i class="ti-dribbble"></i></p>
-                                      <h1>556</h1> </div>
-                              </div>
+                              
                           </div>
-                      </div>
-                      <div class="col-md-8 col-xs-12">
                           <div class="white-box">
                               <form class="form-horizontal form-material">
                                   <div class="form-group">
-                                      <label class="col-md-12">Full Name</label>
+                                      <label class="col-md-12" for="profile_page_name">Full Name</label>
                                       <div class="col-md-12">
-                                          <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line"> </div>
-                                  </div>
+                                          <input type="text" placeholder="Janelle Ann Lagatuz" class="form-control form-control-line" id="profile_page_name" value="Janelle Ann Lagatuz"> </div>
+                                      </div>
                                   <div class="form-group">
-                                      <label for="example-email" class="col-md-12">Email</label>
+                                      <label for="profile_page_email" class="col-md-12">Email</label>
                                       <div class="col-md-12">
-                                          <input type="email" placeholder="johnathan@admin.com" class="form-control form-control-line" name="example-email" id="example-email"> </div>
+                                          <input type="email" placeholder="ja@admin.com" class="form-control form-control-line" name="profile_page_email" id="profile_page_email" value="ja@admin.com"></div>
                                   </div>
                                   <div class="form-group">
                                       <label class="col-md-12">Password</label>
                                       <div class="col-md-12">
-                                          <input type="password" value="password" class="form-control form-control-line"> </div>
+                                          <input type="password" value="password" class="form-control form-control-line" id="profile_page_pw"> </div>
                                   </div>
                                   <div class="form-group">
-                                      <label class="col-md-12">Phone No</label>
+                                      <label for="profile_page_role" class="col-md-12">My Role</label>
                                       <div class="col-md-12">
-                                          <input type="text" placeholder="123 456 7890" class="form-control form-control-line"> </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <label class="col-md-12">Message</label>
-                                      <div class="col-md-12">
-                                          <textarea rows="5" class="form-control form-control-line"></textarea>
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <label class="col-sm-12">Select Country</label>
-                                      <div class="col-sm-12">
-                                          <select class="form-control form-control-line">
-                                              <option>London</option>
-                                              <option>India</option>
-                                              <option>Usa</option>
-                                              <option>Canada</option>
-                                              <option>Thailand</option>
-                                          </select>
+                                          <!-- <input type="email" placeholder="ja@admin.com" class="form-control form-control-line" name="profile_page_email" id="profile_page_email" value="ja@admin.com"></div> -->
+                                          <span id="profile_page_role"><i>ADMIN/USER</i></span>
                                       </div>
                                   </div>
                                   <div class="form-group">
@@ -399,12 +371,13 @@
                               </form>
                           </div>
                       </div>
+                      
                   </div>
                 </div>
                     <!-- /.row -->
-                <!-- END ADMIN VIEW PROFILE PAGE -->
+                <!-- END ADMIN & !ADMIN VIEW PROFILE PAGE -->
 
-                <!-- START ADMIN MY RESERVATION -->
+                <!-- START ADMIN & !ADMIN VIEW MY RESERVATION -->
                 <div class="container-fluid" id="list_my_reservations"  >
                     <!-- ============================================================== -->
                     <!-- table -->
@@ -417,9 +390,7 @@
                             <table class="table">
                               <thead>
                                   <tr>
-                                     
                                       <th>TITLE</th>
-                                                                            
                                   </tr>
                               </thead>
                               <tbody id="list_my_reservation">
@@ -434,7 +405,7 @@
                       </div>
                     </div>
                   </div>
-                <!-- END ADMIN MY RESERVATION -->
+                <!-- END ADMIN & !ADMIN MY RESERVATION -->
 
                 <!-- END ADMIN VIEW -->
                 
