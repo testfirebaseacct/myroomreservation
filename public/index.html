@@ -378,7 +378,7 @@
                             <table class="table">
                               <thead>
                                   <tr>
-                                      <th>TITLE</th>
+                                      <th>ROOM NAME</th>
                                   </tr>
                               </thead>
                               <tbody id="list_my_reservation">
@@ -515,7 +515,7 @@
                           <input type="date"  class="form-control form-control-line" id="edit_new_date" onclick="dateLimit()" >
                           <script>
                             function dateLimit() {
-                                //Display Only Date till today // 
+                                //Display Only Date till today // admin_list_of_rooms
                                 var dtToday = new Date();
                                 var month = dtToday.getMonth() + 1;     // getMonth() is zero-based
                                 var day = dtToday.getDate();
@@ -584,7 +584,7 @@
                 <!-- END EDIT BOOKING -->
 
                 <!-- ROOMS NAVIGATION VIEW -->
-                <div class="container-fluid" id="_admin_list_of_rooms"  >
+                <div class="container-fluid" id="admin_list_of_rooms"  >
                     <!-- ============================================================== -->
                     <!-- table -->
                     <!-- ============================================================== -->
