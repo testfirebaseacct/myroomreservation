@@ -250,9 +250,6 @@ function checkAdmin(user) {
 function changeRole(userId) {
   console.log("Changing role...");
   var userRoleRef = usersRef.doc(userId).get().then(function(usr) {
-
-    console.log("User: ", usr.data());
-    console.log("Admin? ", usr.data().admin);
     var isUserAdmin = usr.data().admin;
     var addAdmin = true;
     if(isUserAdmin) {
