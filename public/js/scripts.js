@@ -46,6 +46,7 @@ myRoomReservation.prototype.initFirebase = function () {
   roomsRef = this.firestore.collection("rooms");
   reservationsRef = this.firestore.collection("reservations");
   reservedListRef = this.firestore.collection("reservations").doc("reservationDetails").collection("reservedList");
+  announcementsRef = this.firestore.collection("announcements");
 }
 
 //sign-in account
@@ -208,6 +209,83 @@ function checkAdmin(user) {
   });
 
   return false;
+}
+
+//change user role
+function changeRole(userId) {
+  var userRoleRef = usersRef.doc(userId).get().then(function(usr) {
+
+    var isUserAdmin = usr.data().admin;
+    var addAdmin = false;
+    if(!isUserAdmin) {
+      addAdmin = true;
+    }
+
+    usersRef.doc(userId).update({
+      admin: addAdmin
+    }).then(() => {
+      console.log("User admin role revoked.");
+    }).catch(err => {
+      console.error("Error revoking admin role: ", err);
+    });
+
+  }).catch(err => {
+    console.error("Fetching user for role changes failed: ", err);
+  });
+  
+}
+
+//cancelling of reservation
+function cancelReservation(reservationId) {
+  var cancelReservedRoom = reservedListRef.doc(reservationId).delete()
+  .then(() => {
+    console.log("Cancelation successful.");
+  }).catch(err => {
+    console.error("Reservation cancelation failed: ", err);
+  })
+}
+
+//room deletion
+function deleteRoom(roomId) {
+  var deleteRoom = roomsRef.doc(roomId).delete()
+  .then(() => {
+    console.log("Room deleted successfully.");
+  }).catch(err => {
+    console.error("Room deletion failed: ", err);
+  })
+}
+
+//announcement deletion
+function deleteAnnouncement(announcementId) {
+  var deleteAnnouncement = announcementsRef.doc(announcementId).delete()
+  .then(() => {
+    console.log("Announcement deleted successfully.");
+  }).catch(err => {
+    console.error("Announcement deletion failed: ", err);
+  })
+}
+
+//change rool availability
+function changeRoomAvailability(roomId) {
+  var userRoleRef = roomsRef.doc(roomId).get().then(function(rm) {
+
+    var isRoomAvailable = rm.data().available;
+    var roomAvailable = false;
+    if(!isRoomAvailable) {
+      roomAvailable = true;
+    }
+
+    roomsRef.doc(roomId).update({
+      available: roomAvailable
+    }).then(() => {
+      console.log("Room availability has been changed.");
+    }).catch(err => {
+      console.error("Error changing room availability: ", err);
+    });
+  }).catch(err => {
+    console.error("Fetching room for availability changes failed: ", err);
+  });
+  
 }
 
 //signout
