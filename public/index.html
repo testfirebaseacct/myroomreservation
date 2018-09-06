@@ -872,6 +872,13 @@
     <script src="plugins/bower_components/toast-master/js/jquery.toast.js"></script>
     <!-- FOR DASHBOARD -->
 
+    <script>
+      // Retrieve Firebase Messaging object.
+      const messaging = firebase.messaging();
+
+      // Add the public key generated from the console here.
+      messaging.usePublicVapidKey("BKK_C2FftO7qWMtSqbC3qgS3eIDJkD9NwvzJBAyfbA9wtX4qGE-r3fjTIaN59fmZw5Jep1gqZlPbMqA8Pqdxcb4");
+    </script>
     
 
   </body>
