@@ -17,17 +17,27 @@ function myRoomReservation() {
   this.dash_nav = document.getElementById('dash_nav');
   this.footer = document.getElementById('footer');
 
+  //navigations
+  this.usersPage = document.getElementById('admin_list_users');
+  this.profilePage = document.getElementById('profile_page');
+  this.reservationsPage = document.getElementById('list_my_reservations');
+  this.roomsPage = document.getElementById('admin_list_of_rooms');
+
+  //userheader
+  this.profilePicHead = document.getElementById('profilePic');
+  this.userNameHead = document.getElementById('userName');
+
   //signin object
   this.signInButton = document.getElementById('signInButton');
 
   //logout object
-  this.logoutButton = document.getElementById('logoutButton');
+  this.logoutLink = document.getElementById('logoutLink');
 
   //signinEvent
   this.signInButton.addEventListener('click', this.signIn.bind(this));
 
   //logoutEvent
-  this.logoutButton.addEventListener('click', this.signOut.bind(this));
+  this.logoutLink.addEventListener('click', this.signOut.bind(this));
 
   //initialize Firebase
   this.initFirebase();
@@ -72,6 +82,8 @@ myRoomReservation.prototype.onAuthStateChanged = function(user) {
     this.dash_nav.removeAttribute('hidden');
     this.footer.removeAttribute('hidden');
     this.wrapperPage.removeAttribute('style');
+    this.userNameHead.innerHTML = user.displayName;
+    this.profilePicHead.setAttribute('src', user.photoURL);
     
   } else {
     this.loginPage.removeAttribute('hidden');
