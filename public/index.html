@@ -10,6 +10,8 @@
         <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--===============================================================================================-->	
+    <link rel="manifest" href="manifest.json">
+  <!--===============================================================================================-->	
     <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
   <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -49,6 +51,10 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+
+
+
 
     <style media="screen">
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
@@ -865,6 +871,15 @@
     <script src="js/dashboard1.js"></script>
     <script src="plugins/bower_components/toast-master/js/jquery.toast.js"></script>
     <!-- FOR DASHBOARD -->
+
+    <script>
+      // Retrieve Firebase Messaging object.
+      const messaging = firebase.messaging();
+
+      // Add the public key generated from the console here.
+      messaging.usePublicVapidKey("BKK_C2FftO7qWMtSqbC3qgS3eIDJkD9NwvzJBAyfbA9wtX4qGE-r3fjTIaN59fmZw5Jep1gqZlPbMqA8Pqdxcb4");
+    </script>
+    
 
   </body>
 </html>
