@@ -136,7 +136,7 @@ myRoomReservation.prototype.listReservedRooms = function() {
 			                  html: "<td>" + count + "</td>" + 
 			                  "<td>" + rm.data().name + "</td>" +
 			                  "<td>" + roomDetails.status + "</td>" +
-			                  "<td>" + roomDetails.reservedSchedule.toDate() + "</td>" +
+			                  "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>"
 			                  "<td><span class='text-success'><a href='#'' class='waves-effect' id='cancel_reserve' onclick='cancelReservation(" + rooms.id + ")'><i class='fa fa-external-link fa-fw' aria-hidden='true'></i></a></span></td></tr>"
 			                }));  
 		                });
