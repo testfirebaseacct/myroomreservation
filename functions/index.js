@@ -11,42 +11,84 @@ const gmailPassword = functions.config().gmail.password;
 const mailTransport = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: testfirebaseacct@gmail.com,
-    pass: firebasetestaccount,
+    user: "testfirebaseacct@gmail.com",
+    pass: "firebasetestaccount",
   },
 });
 
 // Your company name to include in the emails
-// TODO: Change this to your app or company name to customize the email sent.
-const APP_NAME = 'Reservation';
+const APP_NAME = 'skedME';
 
-// [START sendInvitation]
-/**
- * Sends an invitation email to participants upon creation of reservation.
- */
+//Trigger to send welcome email to newly registered user
+exports.sendWelcomeEmail = functions.auth.user().onCreate((user) => {
 
+  const email = user.email; // The email of the user.
+  const displayName = user.displayName; // The display name of the user.
+
+  return sendWelcomeEmail(email, displayName);
+});
+
+//Trigger to send an invitation email to all participants upon creation of reservation.
 exports.sendInvitation = functions.firestore
-    .document('test/{email}').onCreate((snap, context) => {
-      const email = snap.get('email');
-      const displayName = snap.get('displayName'); // The display name of the user.
-    });
-    return sendInvitationEmail(email, displayName);
-  });
-//[END sendInvitation]
+    .document('/reservations/reservationDetails/reservedList/{emailList}').onCreate((snap, context) => {
 
-//[START sendInvitationEmail]
-/**
- * Sends the invitation email to the participants
- */
-  async function sendInvitationEmail(email, displayName) {
+      const entry = snap.data();
+      const attachments = entry.attachments;
+      const creationTime = entry.created;
+      const description = entry.description;
+      const reservedBy = entry.reservedBy;
+      const reservedSchedule = entry.reservedSchedule;
+      const reservedRoom = entry.room;
+      const status = entry.status;
+      const title = entry.title;
+      const guests = entry.guests;
+      const optionalGuests = entry.optionalGuests;
+      var guestList = null;
+
+      if(optionalGuests){
+       guestList = guests+","+optionalGuests;
+      } else {
+       guestList = guests;
+     }
+    return sendInvitationEmail(guestList,attachments,reservedBy,reservedSchedule,reservedRoom,title,description);
+  });
+
+// Implements the logic for sending the welcome email
+async function sendWelcomeEmail(email, displayName) {
     const mailOptions = {
-      from: '${APP_NAME} <noreply@firebase.com>',
+      from: 'skedMe Team <noreply@firebase.com>',
       to: email,
     };
-
     //
-    mailOptions.subject = 'Welcome to ${APP_NAME}!';
-    mailOptions.text = 'Hey ${displayName || ''}! Welcome to ${APP_NAME}. I hope you will enjoy our service.';
+    mailOptions.subject = `Welcome to ${APP_NAME}!`;
+    mailOptions.text = `Hey ${displayName || ''}! Welcome to ${APP_NAME}!
+    \nThanks for signing up, We're happy to have you!
+    \nIf you haven't signed up, please ignore this email.
+    \nCheers,
+    \nThe skedMe Team`;
     await mailTransport.sendMail(mailOptions);
-    return console.log('Email sent to:', email);
+    return console.log('Welcome Email sent to:', email);
+  }
+
+// Implements the logic for sending the invitation email
+async function sendInvitationEmail(guestList,attachments,reservedBy,reservedSchedule,reservedRoom,title,description) {
+    const mailOptions = {
+      from: 'skedMe Team <noreply@firebase.com>',
+      to: guestList,
+    };
+    //
+    mailOptions.subject = `Room ${reservedRoom || ''} reserved by ${reservedBy || ''} on ${reservedSchedule || ''} `;
+    mailOptions.text = `Hey there,
+    \nYou've received this email as you, or someone else on behalf of you, had reserved a room through ${APP_NAME}
+    \nPlease see the details below:
+    \nTopic: ${title}
+    \nDescription: ${description}
+    \nRoom Reserved: ${reservedRoom}
+    \nReserved by: ${reservedBy}
+    \nReserved Schedule: ${reservedSchedule}
+    \nAttachments: ${attachments}
+    \n Cheers,
+    \n The skedMe Team`;
+    await mailTransport.sendMail(mailOptions);
+    return console.log('Invitation Emails sent to:', guestList);
   }
