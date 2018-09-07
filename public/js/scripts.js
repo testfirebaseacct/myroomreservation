@@ -252,16 +252,18 @@ myRoomReservation.prototype.onAuthStateChanged = function(user) {
       userAdmin= doc.data().admin;
       if(userAdmin) {
         console.log("Admin? ", userAdmin);
+        userShowPages();
+      }
+
 
       listReservedRooms(user);
       listUsers(user);
       listRooms();
       dashboardShowPages();
-      userShowPages();
       profileShowPages();
       roomShowPages();
       reservationShowPages();
-      }
+
     }).catch(err => {
       console.error("Error checking admin: ", err);
     });
@@ -340,7 +342,7 @@ myRoomReservation.prototype.checkSetup = function() {
 //reserved rooms list
 function listReservedRooms(user) {
 	var dateToday = new Date();
-	console.log("Load list of rooms...");
+	console.log("Load list of reservations rooms...");
 	if(userAdmin) { //for admins
 		var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
 		.onSnapshot(function(list) {
@@ -379,7 +381,12 @@ function listReservedRooms(user) {
                     });
 		            })
 		        console.log("Rooms list query completed!");
-	        }
+	        } else {
+            $('#list_reservation').empty();
+            $('#list_reservation').append($('<tr>',{
+              html: "<td> No reservations at the moment. </td></tr>"
+            }));
+          }
 	    });
 	} else { //for non-admins
 		var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
@@ -390,7 +397,7 @@ function listReservedRooms(user) {
                 list.forEach(function(rooms) {
                   var roomName;
                     var roomDetails = rooms.data();
-                    if(rooms.get("reservedBy").path == "users/" + user.uid) {
+                    if(rooms.get("reservedBy").path == "/users/" + user.uid) {
 
                       var roomRef = firebase.firestore().doc(rooms.get("room").path).get().then(function(rm) {
                         roomName = rm.data().name;
@@ -412,9 +419,104 @@ function listReservedRooms(user) {
                     }
                 })
             console.log("Rooms list query completed!");
+          } else {
+            $('#list_reservation').empty();
+            $('#list_reservation').append($('<tr>',{
+              html: "<td> No reservations at the moment. </td></tr>"
+          }));
           }
       });
 	}
+}
+
+//reserved rooms list
+function listMyReservedRooms(user) {
+  var dateToday = new Date();
+  console.log("Load list of user reservations rooms...");
+  if(userAdmin) { //for admins
+    var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
+    .onSnapshot(function(list) {
+          if(list) {
+            $('#list_my_reservation').empty();
+              var count = 0; 
+                list.forEach(function(rooms) {
+                  var roomName;
+                  var userName;
+                    var roomDetails = rooms.data();
+
+                    var userRef = firebase.firestore().doc(rooms.get("reservedBy").path).get().then(function(usr) {
+                      userName = usr.data().name;
+                    }).then(() => {
+                      console.info("Getting user details successful.");
+
+                      var roomRef = firebase.firestore().doc(rooms.get("room").path).get().then(function(rm) {
+                        roomName = rm.data().name;
+                      }).then(() => {
+                        console.info("Getting room details successful.");
+                        
+                        count += 1;
+                        $('#list_reservation').append($('<tr>',{
+                          html: "<td>" + count + "</td>" + 
+                          "<td>" + roomName + "</td>" +
+                          "<td>" + userName + "</td>" +
+                          "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>" +
+                          "<td><span class='text-success'><a href='#' class='waves-effect' onclick='editReservation(\"" + roomDetails.id + "\")'><i class='fa fa-edit' aria-hidden='true' title='Edit Reservation'></i></a><br>" +
+                          "<a href='#' class='waves-effect' onclick='cancelReservation(\"" + roomDetails.id + "\")'><i class='fa fa-trash-o' aria-hidden='true' title='Delete Reservation'></i></a></span></td></tr>"
+                        }));
+                      }).catch(err => {
+                        console.error("Error getting room details: ", err);
+                      });
+                    }).catch(err => {
+                      console.error("Error getting user details: ", err);
+                    });
+                })
+            console.log("Rooms list query completed!");
+          } else {
+            $('#list_reservation').empty();
+            $('#list_reservation').append($('<tr>',{
+              html: "<td> No reservations at the moment. </td></tr>"
+            }));
+          }
+      });
+  } else { //for non-admins
+    var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
+    .onSnapshot(function(list) {
+          if(list) {
+            $('#list_reservation').empty();
+              var count = 0; 
+                list.forEach(function(rooms) {
+                  var roomName;
+                    var roomDetails = rooms.data();
+                    if(rooms.get("reservedBy").path == "/users/" + user.uid) {
+
+                      var roomRef = firebase.firestore().doc(rooms.get("room").path).get().then(function(rm) {
+                        roomName = rm.data().name;
+                      }).then(() => {
+                        console.info("Getting room details successful.");
+
+                        count += 1;
+                        $('#list_reservation').append($('<tr>',{
+                          html: "<td>" + count + "</td>" + 
+                          "<td>" + roomName + "</td>" +
+                          "<td>" + roomDetails.status + "</td>" +
+                          "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>" +
+                          "<td><span class='text-success'><a href='#' class='waves-effect' onclick='editReservation(\"" + roomDetails.id + "\")'><i class='fa fa-edit' aria-hidden='true' title='Edit Reservation'></i></a><br>" +
+                          "<a href='#' class='waves-effect' onclick='cancelReservation(\"" + roomDetails.id + "\")'><i class='fa fa-trash-o' aria-hidden='true' title='Delete Reservation'></i></a></span></td></tr>"
+                        }));
+                      }).catch(err => {
+                        console.error("Error getting room details: ", err);
+                      });
+                    }
+                })
+            console.log("Rooms list query completed!");
+          } else {
+            $('#list_reservation').empty();
+            $('#list_reservation').append($('<tr>',{
+              html: "<td> No reservations at the moment. </td></tr>"
+          }));
+          }
+      });
+  }
 }
 
 //list users
@@ -447,6 +549,11 @@ function listUsers(user) {
                   }
                 })
             console.log("Users list query completed!");
+          } else {
+            $('#list_users').empty();
+            $('#list_users').append($('<tr>',{
+              html: "<td> No other registered users at the moment. </td></tr>"
+            }));
           }
       });
   }
@@ -487,6 +594,11 @@ function listRooms() {
                   }
                 })
             console.log("Rooms list query completed!");
+          } else {
+            $('#list_rooms').empty();
+            $('#list_rooms').append($('<tr>',{
+              html: "<td> No rooms added at the moment. </td></tr>"
+            }));
           }
       });
  }
@@ -592,5 +704,4 @@ myRoomReservation.prototype.checkSetup = function() {
 //instantiates backend operations
 window.onload = function() {
   window.myRoomReservation = new myRoomReservation();
-  window.location.reload();
 };
