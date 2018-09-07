@@ -1,0 +1,24 @@
+{
+  "short_name": "Maps",
+  "name": "Google Maps",
+  "icons": [
+    {
+      "src": "/images/sked.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/sked.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/maps/?source=pwa",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/maps/",
+  "theme_color": "#3367D6",
+  
+  "gcm_sender_id": "103953800507"
+  
+}
