@@ -68,7 +68,13 @@ messaging.getToken().then(function(currentToken) {
 }
 
 
-function sendTokenToServer(token) {
-
-
-}
+// function sendTokenToServer(currtoken) {
+//     this.firestore = firebase.firestore();
+//     usersRef = this.firestore.collection("users");
+//     var chkToken = usersRef.doc(user.uid).get()
+// 	.then(function(doc) {
+// 		if (doc.exists) {
+// 			console.info("User already existing.");
+// 		}
+//     }
+// }
