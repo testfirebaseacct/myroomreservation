@@ -35,11 +35,23 @@ function myRoomReservation() {
 
   //entities from pages
   this.addRoomButton = document.getElementById('addRoomButton');
+  this.newRoomName = document.getElementById('new_room_name');
+  this.newRoomFloor = document.getElementById('new_room_floor');
+  this.newRoomCapacity = document.getElementById('new_room_capacity');
+  this.newRoomEquipment = document.getElementById('new_room_equip');
+  this.saveRoom = document.getElementById('saveRoom');
+  this.cancelSaveRoom = document.getElementById('cancelSaveRoom');
+  this.saveEditRoom = document.getElementById('saveEditRoom');
+  this.cancelEditRoom = document.getElementById('cancelEditRoom');
+
+
+  this.addNewReservationButton = document.getElementById('addNewReservationButton');
   this.headActionsTable = document.getElementById('actions_head_room');
   this.addReservationPage = document.getElementById('add_new_booking');
   this.editReservationPage = document.getElementById('edit_booking');
   this.addRoomPage = document.getElementById('add_new_room');
   this.editRoomPage = document.getElementById('edit_new_room');
+  this.reservedRoomName = document.getElementById('reservedRoomName');
 
   this.profilePagePic = document.getElementById('profilePagePic');
   this.profilePageBannerName = document.getElementById('profile_banner_name');
@@ -65,6 +77,16 @@ function myRoomReservation() {
   this.roomsLink.addEventListener('click', roomShowPages.bind(this));
   this.usersLink.addEventListener('click', userShowPages.bind(this));
   this.announcementsLink.addEventListener('click', announcementShowPages.bind(this));
+
+  //roomsEvents
+  this.addRoomButton.addEventListener('click', addNewRoomShowPage.bind(this));
+  this.saveRoom.addEventListener('click', addNewRoom.bind(this));
+  this.cancelSaveRoom.addEventListener('click', roomShowPages.bind(this));
+  this.saveEditRoom.addEventListener('click', editRoom.bind(this));
+  this.cancelEditRoom.addEventListener('click', roomShowPages.bind(this));
+
+  //reservationEvents
+  //this.addNewReservationButton.addEventListener('click', addNewReservation.bind(this));
 
   //signinEvent
   this.signInButton.addEventListener('click', this.signIn.bind(this));
@@ -126,7 +148,6 @@ function userShowPages() {
 
 function roomShowPages () {
 
-  console.log("Room Page, ", userAdmin);
   this.dashboardPage.setAttribute('hidden', true);
   this.usersPage.setAttribute('hidden', true);
   this.profilePage.setAttribute('hidden', true);
@@ -141,6 +162,53 @@ function roomShowPages () {
   this.addRoomButton.removeAttribute('hidden');
   this.headActionsTable.removeAttribute('hidden');
   this.usersLink.removeAttribute('hidden');
+ } else {
+  this.addRoomButton.setAttribute('hidden', true);
+  this.headActionsTable.setAttribute('hidden', true);
+  this.usersLink.setAttribute('hidden', true);
+ }
+
+}
+
+function addNewRoomShowPage () {
+
+  this.dashboardPage.setAttribute('hidden', true);
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.editRoomPage.setAttribute('hidden', true);
+
+ if(userAdmin) {
+  this.addRoomPage.removeAttribute('hidden');
+  this.usersLink.removeAttribute('hidden');
+  this.headActionsTable.removeAttribute('hidden');
+ } else {
+  this.addRoomButton.setAttribute('hidden', true);
+  this.headActionsTable.setAttribute('hidden', true);
+  this.usersLink.setAttribute('hidden', true);
+ }
+
+}
+
+
+function editRoomShowPages () {
+
+  this.dashboardPage.setAttribute('hidden', true);
+  this.usersPage.setAttribute('hidden', true);
+  this.profilePage.setAttribute('hidden', true);
+  this.reservationsPage.setAttribute('hidden', true);
+  this.roomsPage.setAttribute('hidden', true);
+  this.addReservationPage.setAttribute('hidden', true);
+  this.editReservationPage.setAttribute('hidden', true);
+  this.addRoomPage.setAttribute('hidden', true);
+
+ if(userAdmin) {
+  this.editRoomPage.removeAttribute('hidden');
+  this.usersLink.removeAttribute('hidden');
+  this.headActionsTable.removeAttribute('hidden');
  } else {
   this.addRoomButton.setAttribute('hidden', true);
   this.headActionsTable.setAttribute('hidden', true);
@@ -252,11 +320,16 @@ myRoomReservation.prototype.onAuthStateChanged = function(user) {
       userAdmin= doc.data().admin;
       if(userAdmin) {
         console.log("Admin? ", userAdmin);
-        userShowPages();
-      }
-
 
       listReservedRooms(user);
+      listMyReservedRooms(user)
+      listUsers(user);
+      listRooms();
+      dashboardShowPages();
+      }
+
+      listReservedRooms(user);
+      listMyReservedRooms(user)
       listUsers(user);
       listRooms();
       dashboardShowPages();
@@ -346,8 +419,8 @@ function listReservedRooms(user) {
 	if(userAdmin) { //for admins
 		var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
 		.onSnapshot(function(list) {
+            $('#list_reservation').empty();
 	        if(list) {
-		        $('#list_reservation').empty();
 		        	var count = 0; 
 		            list.forEach(function(rooms) {
                   var roomName;
@@ -365,14 +438,24 @@ function listReservedRooms(user) {
                         console.info("Getting room details successful.");
                         
                         count += 1;
-                        $('#list_reservation').append($('<tr>',{
-                          html: "<td>" + count + "</td>" + 
-                          "<td>" + roomName + "</td>" +
-                          "<td>" + userName + "</td>" +
-                          "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>" +
-                          "<td><span class='text-success'><a href='#' class='waves-effect' onclick='editReservation(\"" + roomDetails.id + "\")'><i class='fa fa-edit' aria-hidden='true' title='Edit Reservation'></i></a><br>" +
-                          "<a href='#' class='waves-effect' onclick='cancelReservation(\"" + roomDetails.id + "\")'><i class='fa fa-trash-o' aria-hidden='true' title='Delete Reservation'></i></a></span></td></tr>"
-                        }));
+                        if(userAdmin) {
+                          $('#list_reservation').append($('<tr>',{
+                            html: "<td>" + count + "</td>" + 
+                            "<td>" + roomName + "</td>" +
+                            "<td>" + userName + "</td>" +
+                            "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>" +
+                            "<td><span class='text-success'><a href='#' class='waves-effect' onclick='editReservation(\"" + roomDetails.id + "\")'><i class='fa fa-edit' aria-hidden='true' title='Edit Reservation'></i></a><br>" +
+                            "<a href='#' class='waves-effect' onclick='cancelReservation(\"" + roomDetails.id + "\")'><i class='fa fa-trash-o' aria-hidden='true' title='Delete Reservation'></i></a></span></td></tr>"
+                          }));
+                        } else {
+                          $('#list_reservation').append($('<tr>',{
+                            html: "<td>" + count + "</td>" + 
+                            "<td>" + roomName + "</td>" +
+                            "<td>" + userName + "</td>" +
+                            "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td></tr>"
+                          }));
+                        }
+                        
                       }).catch(err => {
                         console.error("Error getting room details: ", err);
                       });
@@ -380,15 +463,14 @@ function listReservedRooms(user) {
                       console.error("Error getting user details: ", err);
                     });
 		            })
-		        console.log("Rooms list query completed!");
+		        console.log("Reservation list query completed!");
 	        } else {
-            $('#list_reservation').empty();
             $('#list_reservation').append($('<tr>',{
               html: "<td> No reservations at the moment. </td></tr>"
             }));
           }
 	    });
-	} else { //for non-admins
+    } else { //for non-admins
 		var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
     .onSnapshot(function(list) {
           if(list) {
@@ -418,7 +500,7 @@ function listReservedRooms(user) {
                       });
                     }
                 })
-            console.log("Rooms list query completed!");
+            console.log("Reservation list query completed!");
           } else {
             $('#list_reservation').empty();
             $('#list_reservation').append($('<tr>',{
@@ -433,56 +515,10 @@ function listReservedRooms(user) {
 function listMyReservedRooms(user) {
   var dateToday = new Date();
   console.log("Load list of user reservations rooms...");
-  if(userAdmin) { //for admins
-    var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
+  var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
     .onSnapshot(function(list) {
+            $('#listMyReservedRooms').empty();
           if(list) {
-            $('#list_my_reservation').empty();
-              var count = 0; 
-                list.forEach(function(rooms) {
-                  var roomName;
-                  var userName;
-                    var roomDetails = rooms.data();
-
-                    var userRef = firebase.firestore().doc(rooms.get("reservedBy").path).get().then(function(usr) {
-                      userName = usr.data().name;
-                    }).then(() => {
-                      console.info("Getting user details successful.");
-
-                      var roomRef = firebase.firestore().doc(rooms.get("room").path).get().then(function(rm) {
-                        roomName = rm.data().name;
-                      }).then(() => {
-                        console.info("Getting room details successful.");
-                        
-                        count += 1;
-                        $('#list_reservation').append($('<tr>',{
-                          html: "<td>" + count + "</td>" + 
-                          "<td>" + roomName + "</td>" +
-                          "<td>" + userName + "</td>" +
-                          "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>" +
-                          "<td><span class='text-success'><a href='#' class='waves-effect' onclick='editReservation(\"" + roomDetails.id + "\")'><i class='fa fa-edit' aria-hidden='true' title='Edit Reservation'></i></a><br>" +
-                          "<a href='#' class='waves-effect' onclick='cancelReservation(\"" + roomDetails.id + "\")'><i class='fa fa-trash-o' aria-hidden='true' title='Delete Reservation'></i></a></span></td></tr>"
-                        }));
-                      }).catch(err => {
-                        console.error("Error getting room details: ", err);
-                      });
-                    }).catch(err => {
-                      console.error("Error getting user details: ", err);
-                    });
-                })
-            console.log("Rooms list query completed!");
-          } else {
-            $('#list_reservation').empty();
-            $('#list_reservation').append($('<tr>',{
-              html: "<td> No reservations at the moment. </td></tr>"
-            }));
-          }
-      });
-  } else { //for non-admins
-    var listAllReserved = reservedListRef.where("reservedSchedule.from", ">=", dateToday).where("status", "==", "reserved").orderBy("reservedSchedule.from", "desc")
-    .onSnapshot(function(list) {
-          if(list) {
-            $('#list_reservation').empty();
               var count = 0; 
                 list.forEach(function(rooms) {
                   var roomName;
@@ -492,14 +528,15 @@ function listMyReservedRooms(user) {
                       var roomRef = firebase.firestore().doc(rooms.get("room").path).get().then(function(rm) {
                         roomName = rm.data().name;
                       }).then(() => {
-                        console.info("Getting room details successful.");
+                        console.info("Getting user reserved room details successful.");
 
                         count += 1;
-                        $('#list_reservation').append($('<tr>',{
-                          html: "<td>" + count + "</td>" + 
-                          "<td>" + roomName + "</td>" +
-                          "<td>" + roomDetails.status + "</td>" +
+                        this.reservedRoomName.innerHTML = roomName;
+                        $('#listMyReservedRooms').append($('<tr>',{
+                          html: "<td>" + roomDetails.floor + "</td>" + 
                           "<td>From: " + roomDetails.reservedSchedule.from.toDate() + "<br>To: " + roomDetails.reservedSchedule.to.toDate() + "</td>" +
+                          "<td>" + roomDetails.guests + "," + roomDetails.optionalGuests + "</td>" +
+                          "<td>" + roomDetails.status + "</td>" +
                           "<td><span class='text-success'><a href='#' class='waves-effect' onclick='editReservation(\"" + roomDetails.id + "\")'><i class='fa fa-edit' aria-hidden='true' title='Edit Reservation'></i></a><br>" +
                           "<a href='#' class='waves-effect' onclick='cancelReservation(\"" + roomDetails.id + "\")'><i class='fa fa-trash-o' aria-hidden='true' title='Delete Reservation'></i></a></span></td></tr>"
                         }));
@@ -508,15 +545,13 @@ function listMyReservedRooms(user) {
                       });
                     }
                 })
-            console.log("Rooms list query completed!");
+            console.log("User reservation list query completed!");
           } else {
-            $('#list_reservation').empty();
-            $('#list_reservation').append($('<tr>',{
+            $('#listMyReservedRooms').append($('<tr>',{
               html: "<td> No reservations at the moment. </td></tr>"
           }));
           }
       });
-  }
 }
 
 //list users
@@ -550,7 +585,6 @@ function listUsers(user) {
                 })
             console.log("Users list query completed!");
           } else {
-            $('#list_users').empty();
             $('#list_users').append($('<tr>',{
               html: "<td> No other registered users at the moment. </td></tr>"
             }));
@@ -595,7 +629,6 @@ function listRooms() {
                 })
             console.log("Rooms list query completed!");
           } else {
-            $('#list_rooms').empty();
             $('#list_rooms').append($('<tr>',{
               html: "<td> No rooms added at the moment. </td></tr>"
             }));
@@ -634,6 +667,41 @@ function cancelReservation(reservationId) {
     console.log("Cancelation successful.");
   }).catch(err => {
     console.error("Reservation cancelation failed: ", err);
+  });
+}
+
+
+//room addition
+function addNewRoom() {
+  var addRoom = roomsRef.add({
+    available: true,
+    capacity: this.newRoomCapacity.value,
+    equipments: [this.newRoomEquipment.value],
+    floor: this.newRoomFloor.value,
+    name: this.newRoomName.value
+  }).then(() => {
+    console.log("Room successfully added.");
+    roomShowPages();
+  }).catch(err => {
+    console.log("Error adding room: ", err);
+  });
+}
+
+//room update
+function editRoom(roomId) {
+
+  editRoomShowPages();
+  var editRoom = roomsRef.doc(roomId).update({
+    available: true,
+    capacity: this.newRoomCapacity.value,
+    equipments: [this.newRoomEquipment.value],
+    floor: this.newRoomFloor.value,
+    name: this.newRoomName.value
+  }).then(() => {
+    console.log("Room successfully updated.");
+    roomShowPages();
+  }).catch(err => {
+    console.log("Error editin room: ", err);
   });
 }
 

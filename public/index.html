@@ -285,7 +285,7 @@
                                   <th>ROOM NAME</th>
                                   <th>USER</th>
                                   <th>RESERVATION SCHEDULE</th>
-                                  <th>CANCEL</th>
+                                  <th></th>
                               </tr>
                           </thead>
                           <tbody id="list_reservation">
@@ -466,7 +466,7 @@
                             <div>
                               <div class="col-md-11"></div>
                               <div class="col-md-1">
-                                  <span class="text-success"><a href="#" class="waves-effect"><i class="fa fa-plus-square-o fa-fw" aria-hidden="true"></i>Add New</a></span>  
+                                  <span class="text-success"><a href="#" class="waves-effect" id="addNewReservationButton"><i class="fa fa-plus-square-o fa-fw" aria-hidden="true"></i>Add New</a></span>  
                               </div>
                               
                             </div>
@@ -743,8 +743,8 @@
                             
                           
                             <div style="padding-top: 25px;">
-                              <span class="text-success col-md-6" id="new_room_save" ><a href="#" class="waves-effect"><i class="fa fa-save fa-fw" aria-hidden="true"></i>SAVE</a></span>
-                              <span class="text-success col-md-6" id="new_room_cancel" ><a href="#" class="waves-effect"><i class="fa fa-save fa-fw" aria-hidden="true"></i>CANCEL</a></span>
+                              <span class="text-success col-md-6" id="new_room_save" ><a href="#" class="waves-effect" id="saveRoom"><i class="fa fa-save fa-fw" aria-hidden="true"></i>SAVE</a></span>
+                              <span class="text-success col-md-6" id="new_room_cancel" ><a href="#" class="waves-effect" id="cancelSaveRoom"><i class="fa fa-save fa-fw" aria-hidden="true"></i>CANCEL</a></span>
                             </div>
                           </div>
 
@@ -784,8 +784,8 @@
                               
                             
                               <div style="padding-top: 25px;">
-                                <span class="text-success col-md-6" id="edit_room_save" ><a href="#" class="waves-effect"><i class="fa fa-save fa-fw" aria-hidden="true"></i>SAVE</a></span>
-                                <span class="text-success col-md-6" id="edit_room_cancel" ><a href="#" class="waves-effect"><i class="fa fa-save fa-fw" aria-hidden="true"></i>CANCEL</a></span>
+                                <span class="text-success col-md-6" id="edit_room_save" ><a href="#" class="waves-effect" id="saveEditRoom"><i class="fa fa-save fa-fw" aria-hidden="true"></i>SAVE</a></span>
+                                <span class="text-success col-md-6" id="edit_room_cancel" ><a href="#" class="waves-effect"  id="cancelEditRoom"><i class="fa fa-save fa-fw" aria-hidden="true"></i>CANCEL</a></span>
                               </div>
                             </div>
                           </div>
@@ -829,14 +829,14 @@
       
 
     <!-- update the version number as needed -->
-    <script defer src="/__/firebase/5.4.2/firebase-app.js"></script>
+    <script src="/__/firebase/5.4.2/firebase-app.js"></script>
     <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/5.4.2/firebase-auth.js"></script>
-    <script defer src="/__/firebase/5.4.2/firebase-firestore.js"></script>
-    <script defer src="/__/firebase/5.4.2/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/5.4.2/firebase-storage.js"></script>
+    <script src="/__/firebase/5.4.2/firebase-auth.js"></script>
+    <script src="/__/firebase/5.4.2/firebase-firestore.js"></script>
+    <script src="/__/firebase/5.4.2/firebase-messaging.js"></script>
+    <script src="/__/firebase/5.4.2/firebase-storage.js"></script>
     <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+    <script src="/__/firebase/init.js"></script>
 
     <!-- backend script -->
     <script src="js/scripts.js"></script>
