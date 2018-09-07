@@ -1,5 +1,5 @@
 {
-  "short_name": "Maps",
+  "short_name": "skedMe",
   "name": "Google Maps",
   "icons": [
     {
@@ -13,10 +13,9 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/maps/?source=pwa",
+  "start_url": "/index.html",
   "background_color": "#ffffff",
   "display": "standalone",
-  "scope": "/maps/",
   "theme_color": "#3367D6",
   
   "gcm_sender_id": "103953800507"
