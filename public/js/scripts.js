@@ -41,6 +41,13 @@ function myRoomReservation() {
   this.addRoomPage = document.getElementById('add_new_room');
   this.editRoomPage = document.getElementById('edit_new_room');
 
+  this.profilePagePic = document.getElementById('profilePagePic');
+  this.profilePageBannerName = document.getElementById('profile_banner_name');
+  this.profilePageBannerEmail = document.getElementById('profile_banner_email');
+  this.profilePageName = document.getElementById('profile_page_name');
+  this.profilePageEmail = document.getElementById('profile_page_email');
+  this.profilePageRole = document.getElementById('profile_page_role');
+
   //userheader
   this.profilePicHead = document.getElementById('profilePic');
   this.userNameHead = document.getElementById('userName');
@@ -267,6 +274,11 @@ myRoomReservation.prototype.onAuthStateChanged = function(user) {
     this.userNameHead.innerHTML = user.displayName;
     this.profilePicHead.setAttribute('src', user.photoURL);
     this.dashboardPage.removeAttribute('hidden');
+    this.profilePagePic.setAttribute('src', user.photoURL);
+    this.profilePageBannerName.innerHTML = user.displayName;
+    this.profilePageBannerEmail.innerHTML =user.email;
+    this.profilePageName.setAttribute('value', user.displayName);
+    this.profilePageEmail.setAttribute('value', user.email);
 
   } else {
     this.loginPage.removeAttribute('hidden');
@@ -580,4 +592,5 @@ myRoomReservation.prototype.checkSetup = function() {
 //instantiates backend operations
 window.onload = function() {
   window.myRoomReservation = new myRoomReservation();
+  window.location.reload();
 };
