@@ -44,6 +44,11 @@ function myRoomReservation() {
   this.saveEditRoom = document.getElementById('saveEditRoom');
   this.cancelEditRoom = document.getElementById('cancelEditRoom');
 
+  this.saveReservation = document.getElementById('btn_new_sched_add');
+  this.cancelReservation = document.getElementById('btn_new_sched_cancel');
+  this.saveEditReservation = document.getElementById('btn_new_sched_edit');
+  this.cancelEditReservation = document.getElementById('btn_edit_sched_cancel');
+
 
   this.addNewReservationButton = document.getElementById('addNewReservationButton');
   this.headActionsTable = document.getElementById('actions_head_room');
@@ -479,7 +484,7 @@ function listReservedRooms(user) {
                 list.forEach(function(rooms) {
                   var roomName;
                     var roomDetails = rooms.data();
-                    if(rooms.get("reservedBy").path == "/users/" + user.uid) {
+                    if(rooms.get("reservedBy").path == "users/" + user.uid) {
 
                       var roomRef = firebase.firestore().doc(rooms.get("room").path).get().then(function(rm) {
                         roomName = rm.data().name;
